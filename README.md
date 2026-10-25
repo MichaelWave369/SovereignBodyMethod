@@ -58,3 +58,14 @@ Recipes are historical author-supplied material, not personal dietary advice; us
 - **Content rights:** © 2026 creators; free access does **not** mean public domain or blanket reuse rights.
 - Health, herbal, supplement, frequency and celestial assertions in originals are historical authorial content and **not independently fact-checked or clinically endorsed**.
 - Personal tracker and unfilled compilation scaffolds are explicitly excluded from publishing. See `docs/SOURCE-INVENTORY.md`.
+
+## Kitchen Mode (weekly menus, favorites, pantry checklist, printing)
+
+Beyond the original daily recipes, visitors can now:
+- View an entire week of the original **smoothie + salad + dinner** menu, and open any day for the exact recipe.
+- Print a week-at-a-glance menu (or use the browser's **Save as PDF**), including the original nine-day final week.
+- Star their favorite original recipes, then revisit them in a personal favorites shelf.
+- Mark individual shopping-list ingredient lines as **Already have**, or check them off as purchased. This is manual and per recipe, not ingredient normalization.
+- Copy or print only the ingredients **still needed**, with all original measures and recipes still available.
+
+Favorites, pantry labels and purchased items use browser-only local storage; no personal information or shopping activity is sent to a server. Clearing local browser data clears them. The printed sheets are generated from the same author-sourced data as the live meal planner, with no added nutritional claims or automatic serving scaling.

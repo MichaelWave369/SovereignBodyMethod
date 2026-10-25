@@ -2,3 +2,70 @@
 @media(max-width:1100px){.meal-planner-section{padding:80px 5vw}.meal-day-numbers{grid-template-columns:repeat(10,1fr)}.meal-recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:750px){.meal-planner-section{padding:68px 22px}.meal-intro{display:block}.meal-intro h2{font-size:clamp(39px,8vw,58px)}.meal-stamp{margin-top:23px;flex-direction:row;align-items:center;gap:25px;width:max-content}.meal-stamp strong{font-size:48px}.meal-tabs button{padding:14px 12px;font-size:11px}.meal-day-numbers{grid-template-columns:repeat(6,1fr)}.meal-day-actions{display:block}.meal-day-actions button{margin-top:12px}.meal-recipe-grid,.meal-shopping-body{grid-template-columns:1fr}.meal-recipe-card h4{min-height:0}.meal-search-controls{flex-direction:column;align-items:stretch}.meal-search-select{width:100%}.meal-shopping-head{gap:20px}.meal-shopping-counter strong{font-size:31px}.meal-shopping-toolbar{align-items:stretch;flex-direction:column}.meal-shopping-toolbar label{min-width:0}.meal-shopping-buttons button{flex:1}.meal-shopping-day{padding:19px}}
 @media(max-width:420px){.meal-shopping-head{display:block}.meal-shopping-counter{text-align:left;margin-top:15px}.meal-day-navigation button{width:40px;height:40px}.meal-day-picker h3{font-size:36px}.meal-recipe-card{padding:21px}.meal-tabs button{font-size:10px;padding:13px 9px}.meal-day-numbers{gap:5px}.meal-day-numbers button{font-size:10px}.meal-note{padding:15px}}
+
+/* Kitchen Mode: weekly menu, saved recipes and pantry-aware shopping. */
+.meal-tabs{overflow-x:auto;white-space:nowrap}.meal-tabs button{flex:0 0 auto}
+.meal-title-row{display:flex;gap:10px;align-items:flex-start;margin:24px 0 14px}
+.meal-title-row h4{margin:0;min-height:0;flex:1}
+.meal-favorite-button{border:1px solid #b9c9b5;background:#f0f3e9;color:#856f43;border-radius:50%;width:37px;height:37px;flex:0 0 37px;display:grid;place-items:center;font-size:23px;padding:0;line-height:1}
+.meal-favorite-button.saved{background:#f0dfb5;border-color:#bd9c52;color:#685122}
+.meal-favorite-button:hover{background:#e7dbc1}
+.meal-week-overview,.meal-favorites-view{margin-top:38px}
+.meal-week-header{display:flex;align-items:end;justify-content:space-between;gap:22px}
+.meal-week-header>div{max-width:680px}
+.meal-week-header h3,.meal-favorites-intro h3{font:400 clamp(32px,3.7vw,52px)/1.15 'DM Serif Display',Georgia,serif;margin:10px 0 16px}
+.meal-week-header h3 em{color:#998354}
+.meal-week-header p:not(.eyebrow),.meal-favorites-intro p:not(.eyebrow){font-size:13px;line-height:1.75;color:#64765d}
+.meal-week-select{font-size:10px;color:#5c705b;letter-spacing:.12em;font-weight:700;min-width:245px}
+.meal-week-select select{display:block;margin-top:8px;background:#f8faf2;border:1px solid #b8c7b3;padding:13px;width:100%;font:13px 'DM Sans',sans-serif;color:#1d3b2b}
+.meal-week-actions{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0 25px}
+.meal-week-actions button{background:#274934;color:#fff;border:1px solid #274934;padding:13px 17px;font-size:12px;font-weight:700}
+.meal-week-actions .meal-outline-button,.meal-shopping-buttons .meal-outline-button{background:transparent;color:#274934;border:1px solid #52735e}
+.meal-week-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.meal-week-day{min-width:0;border:1px solid #c4d2c1;background:#f9f9f2;padding:21px;display:flex;flex-direction:column}
+.meal-week-day-head{display:flex;justify-content:space-between;gap:10px;font-size:10px;letter-spacing:.11em;color:#847348;font-weight:700}
+.meal-week-day-head small{font-size:10px;letter-spacing:0;color:#718270}
+.meal-week-meals{margin:19px 0 20px;display:grid;gap:13px;flex:1}
+.meal-week-meal span{display:block;color:#9c875b;font-size:9px;letter-spacing:.12em;margin-bottom:3px}
+.meal-week-meal strong{font:400 20px/1.3 'DM Serif Display',Georgia,serif}
+.meal-week-day>button{border:0;border-top:1px solid #c4d2bf;background:none;text-align:left;padding:14px 0 0;font-size:11px;font-weight:700;color:#2b5737}
+.meal-week-foot{font-size:11px;color:#667a65;line-height:1.6;margin-top:19px}
+.meal-favorites-intro{max-width:700px;margin-bottom:25px}
+.meal-favorites-view .meal-recipe-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.meal-ingredient-line{display:flex;gap:7px;align-items:flex-start;justify-content:space-between}
+.meal-ingredient-line label{flex:1;min-width:0}
+.meal-pantry-button{font-size:10px;line-height:1.3;flex:0 0 auto;border:1px solid #bacbb5;border-radius:2px;background:#eff3e9;color:#406046;padding:5px 7px}
+.meal-pantry-button.has-item{background:#d5e6c8;border-color:#98b392;color:#235338;font-weight:700}
+.meal-shopping-counter small{line-height:1.5}
+.meal-printout{display:none}
+@media(max-width:1100px){.meal-week-grid,.meal-favorites-view .meal-recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){
+ .meal-week-header{display:block}.meal-week-select{display:block;margin-top:20px;min-width:0}
+ .meal-week-grid,.meal-favorites-view .meal-recipe-grid{grid-template-columns:1fr}
+ .meal-week-actions button{flex:1 1 200px}.meal-title-row h4{font-size:25px}
+}
+@media print{
+ @page{margin:13mm;size:auto}
+ html,body,#root{margin:0!important;padding:0!important;background:#fff!important;color:#111!important}
+ #root>*:not(main){display:none!important}
+ #root>main>*:not(#meals){display:none!important}
+ #meals>*:not(.meal-printout){display:none!important}
+ #meals{padding:0!important;margin:0!important;background:#fff!important;color:#111!important;display:block!important}
+ .meal-printout{display:block!important;position:static!important;color:#111!important;font:10pt/1.4 Georgia,serif}
+ .meal-printout header{border-bottom:1px solid #555;padding:0 0 10px;margin-bottom:15px}
+ .meal-printout header strong{font:700 14pt Arial,sans-serif;letter-spacing:.06em}
+ .meal-printout header p{font:9pt Arial,sans-serif;margin:4px 0}
+ .meal-printout h1{font:400 23pt Georgia,serif;margin:10px 0}
+ .meal-printout h2{font:700 12pt Georgia,serif;margin:10px 0 6px}
+ .meal-printout h3{font:700 10pt Georgia,serif;margin:10px 0 3px}
+ .meal-printout .print-disclaimer{font:9pt Arial,sans-serif;color:#444;max-width:none;margin-bottom:20px}
+ .meal-print-week{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 16px}
+ .meal-print-day{padding:8px;border:1px solid #bbb;break-inside:avoid}
+ .meal-print-day p{margin:3px 0;font-size:9pt}
+ .meal-print-day strong{text-transform:capitalize}
+ .meal-print-shopping-day,.meal-print-shopping-recipe{break-inside:avoid}
+ .meal-print-shopping-day{border-top:1px solid #aaa;margin-top:10px}
+ .meal-print-shopping-recipe ul{margin:4px 0 12px 10px;padding-left:8px;list-style:none}
+ .meal-print-shopping-recipe li{margin:2px 0;font-size:9pt}
+ .meal-printout footer{border-top:1px solid #aaa;padding-top:10px;margin-top:15px;font:8pt Arial,sans-serif;color:#555}
+}
