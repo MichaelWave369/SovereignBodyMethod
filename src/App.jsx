@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ArchiveLibrary from './ArchiveLibrary.jsx';
+import MealPlanner from './MealPlanner.jsx';
 import { completedFromStorage, journey, phases, subjects } from './method.js';
 
 const STORAGE='sovereign-body-method.days.v1';
@@ -24,7 +25,7 @@ function App() {
     <div className="announcement"><span className="announcement-star">✳</span> THE METHOD, FREELY SHARED <span className="announcement-star">✳</span> NO PAYWALL. NO GATEKEEPING.</div>
     <header className="header">
       <a className="logo" href="#top" aria-label="Sovereign Body Method home"><Mark small/><span>THE SOVEREIGN<br/><strong>BODY METHOD</strong></span></a>
-      <nav aria-label="Main navigation"><a href="#philosophy">The philosophy</a><a href="#journey">30-day companion</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
+      <nav aria-label="Main navigation"><a href="#philosophy">Philosophy</a><a href="#journey">Journey</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
       <a className="header-cta" href="#journey">Begin here <span aria-hidden="true">↗</span></a>
     </header>
     <main id="main">
@@ -34,7 +35,7 @@ function App() {
           <p className="hero-overline">A way back to yourself</p>
           <h1>Your body.<br/>Your rhythm.<br/><em>Your sovereignty.</em></h1>
           <p className="hero-lead">A grounded and expansive approach to well-being. Nourishment, movement, rest, nature, reflection, and the freedom to build a practice that belongs to you.</p>
-          <div className="hero-actions"><a className="button button-light" href="#journey">Explore the 30 days <span aria-hidden="true">→</span></a><a className="text-link" href="#philosophy">Discover the method <span aria-hidden="true">↘</span></a></div>
+          <div className="hero-actions"><a className="button button-light" href="#journey">Explore the 30 days <span aria-hidden="true">→</span></a><a className="text-link" href="#meals">Explore the original meals <span aria-hidden="true">↘</span></a></div>
           <div className="byline"><span className="line"/> Created with care by <strong>Mikey &amp; Larrina</strong></div>
         </div>
         <div className="hero-art" aria-label="Abstract concentric circles and organic landscape motif" role="img">
@@ -58,6 +59,7 @@ function App() {
           <article className="day-detail"><div className="day-label"><span>DAY {String(day.day).padStart(2,'0')} / 30</span><span>{day.phase.toUpperCase()} · {day.rhythm.toUpperCase()}</span></div><h3>{day.name}<span className="title-asterisk">✳</span></h3><p className="day-prompt">{day.prompt}</p><div className="today-task"><span className="task-icon">✦</span><div><strong>A reflection, not a prescription</strong><p>Meet yourself wherever you are today. Small and sustainable counts.</p></div></div><div className="day-buttons"><button className={'button '+(completed.has(day.day)?'button-complete':'button-dark')} onClick={()=>toggleDay(day.day)}>{completed.has(day.day)?'✓ Marked complete':'Mark today complete'}</button><div className="step-buttons"><button aria-label="Previous day" disabled={current===1} onClick={()=>nextDay(-1)}>←</button><button aria-label="Next day" disabled={current===30} onClick={()=>nextDay(1)}>→</button></div></div></article>
         </div>
       </section>
+      <MealPlanner/>
       <section className="section library-section" id="library">
         <SectionHeading eyebrow="03 / THE METHOD LIBRARY" title={<>A whole world of<br/><em>possibilities.</em></>}>Explore the themes that shape the Method. Explore the original collection below. Read and download approved originals when the source archive is published.</SectionHeading>
         <div className="subject-grid">{subjects.map(s=><button className="subject" onClick={()=>setSelectedSubject(s)} key={s.name}><span className="eyebrow">{s.eyebrow}</span><strong>{s.name}</strong><p>{s.summary}</p><span className="subject-arrow">↗</span></button>)}</div>
