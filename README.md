@@ -36,6 +36,22 @@ npm run build
 
 The importer runs before the build. Without a source ZIP, the catalog is visible but original reading links remain disabled.
 
+
+## Original 30-day meal planner (90 original recipes)
+
+The home page now has a **Meals** section, built from `Week1_Recipes.docx` through `Week4_Recipes.docx` in the approved public-safe ZIP. The compiler extracts all 30 daily smoothie/salad/dinner combinations and creates `public/meals/recipes.json` automatically on `npm run build` or `npm run dev`.
+
+- Choose days 1–30 and expand any original recipe for ingredients, preparation and original variations.
+- Find recipes by dish name or ingredient with a meal-type filter.
+- Generate shopping lists for a chosen day or week (weeks 1–3 have seven days; week 4 has nine days).
+- Grocery checkmarks stay in browser local storage. Copy lists using your browser clipboard.
+- No AI-generated meals, invented nutrition scores, serving conversions or unreliable ingredient quantity aggregation.
+- Every recipe names its original Word source and retains original quantities and wording, while presentation strips bullet/step-number glyphs.
+
+The strict importer (`scripts/import-meals.mjs` with `scripts/meal-parser.mjs`) rejects missing days or incomplete ingredient/instruction tables. It intentionally does not use the summarized `Complete_30Day_Recipes.docx` appendix for recipe bodies.
+
+Recipes are historical author-supplied material, not personal dietary advice; users should check allergens, preparation temperatures and individual requirements.
+
 ## Respecting authorship and evidence
 
 - **Creators:** Mikey & Larrina
