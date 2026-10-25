@@ -11,7 +11,7 @@ export function dayRecipes(recipes,day){return TYPES.map(type=>recipes.find(r=>r
 export function searchRecipes(recipes,query,type='all'){
   const q=query.trim().toLocaleLowerCase();
   return recipes.filter(r=>(type==='all'||r.type===type)&&
-    (!q||[r.title,r.day+'',r.type,r.sourceFile,...r.ingredients,...r.variations]
+    (!q||[r.title,r.day+'',r.type,r.sourceFile,...(r.ingredients??[]),...(r.variations??[])]
       .join(' ').toLocaleLowerCase().includes(q)));
 }
 export function rangeRecipes(recipes,scope,day){
