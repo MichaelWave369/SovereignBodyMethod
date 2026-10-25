@@ -8,8 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node --test tests/*.test.mjs",
-    "prebuild": "node scripts/import-library.mjs && node scripts/import-meals.mjs && node scripts/import-movement.mjs && node scripts/import-water.mjs && node scripts/import-budget.mjs && node scripts/import-sound.mjs",
-    "predev": "node scripts/import-library.mjs && node scripts/import-meals.mjs && node scripts/import-movement.mjs && node scripts/import-water.mjs && node scripts/import-budget.mjs && node scripts/import-sound.mjs"
+    "prebuild": "node scripts/import-library.mjs && node scripts/import-meals.mjs && node scripts/import-movement.mjs && node scripts/import-water.mjs && node scripts/import-budget.mjs && node scripts/import-sound.mjs && node scripts/import-botanicals.mjs",
+    "predev": "node scripts/import-library.mjs && node scripts/import-meals.mjs && node scripts/import-movement.mjs && node scripts/import-water.mjs && node scripts/import-budget.mjs && node scripts/import-sound.mjs && node scripts/import-botanicals.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
