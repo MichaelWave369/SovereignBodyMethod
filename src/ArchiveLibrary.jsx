@@ -33,17 +33,16 @@ export default function ArchiveLibrary(){
   },[]);
   useEffect(()=>{
     if(query.trim().length<3||searchIndex||indexStatus!=='idle')return;
-    let active=true;
+    // Do not cancel this in an effect cleanup when typing or when the status
+    // becomes "loading". The first search owns one shared index request.
     setIndexStatus('loading');
     fetch(root+'search-index.json').then(r=>{
       if(!r.ok)throw Error('Full original passage index could not be loaded');
       return r.json();
     }).then(data=>{
-      if(!active)return;
       if(data.format!=='sovereign-source-atlas-v1'||!Array.isArray(data.documents))throw Error('Unexpected original passage index format');
       setSearchIndex(data);setIndexStatus('ready');
-    }).catch(()=>{if(active)setIndexStatus('error')});
-    return()=>{active=false};
+    }).catch(()=>setIndexStatus('error'));
   },[query,searchIndex,indexStatus]);
   useEffect(()=>{
     if(!reader)return;
