@@ -91,3 +91,7 @@ The Meals → Shopping List tab now includes a **Budget Studio** built on the ex
 ## Sound & Crystal Explorer
 
 A new \`#sound-studio\` section links the original frequency references, crystal traditions and sacred channel manuscript. Its index extracts only **source-mentioned** frequencies and crystal keywords from the 21 approved public reader documents. A separate user-controlled low-level sine-tone demo is for simple listening experiments, **not healing or medical treatment**. No unverified Gumroad rituals or source audio recordings are fabricated. The historical release remains **partially recovered** in the product crosswalk. All textual index data joins the existing offline PWA. See \`docs/SOUND-CRYSTAL-EXPLORER.md\`.
+
+## Herb & Supplement Reading Library
+
+The website now has a source-grounded searchable index of **botanical names, essential oils and supplement ingredients** that occur in five approved original manuscripts. It records original source locations and counts but **does not recommend remedies, doses or stacks**, infer their safety, or reconstruct an unverified Gumroad purchase bundle. Readers can bookmark topics locally and consult official NIH and FDA evidence resources. Index JSON automatically joins the site's offline PWA. See \`docs/BOTANICAL-REFERENCE.md\`.

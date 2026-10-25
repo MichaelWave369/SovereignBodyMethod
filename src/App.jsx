@@ -5,6 +5,7 @@ import MovementStudio from './MovementStudio.jsx';
 import HydrationStudio from './HydrationStudio.jsx';
 import OriginalReleases from './OriginalReleases.jsx';
 import SoundStudio from './SoundStudio.jsx';
+import BotanicalStudio from './BotanicalStudio.jsx';
 import { completedFromStorage, journey, phases, subjects } from './method.js';
 
 const STORAGE='sovereign-body-method.days.v1';
@@ -71,6 +72,7 @@ function App() {
         <div className="subject-grid">{subjects.map(s=><button className="subject" onClick={()=>setSelectedSubject(s)} key={s.name}><span className="eyebrow">{s.eyebrow}</span><strong>{s.name}</strong><p>{s.summary}</p><span className="subject-arrow">↗</span></button>)}</div>
         <ArchiveLibrary/>
         <SoundStudio/>
+        <BotanicalStudio/>
         <OriginalReleases/>
         <div className="archive-banner"><div><p className="eyebrow">THE ORIGINAL ARCHIVE</p><h3>The full source collection deserves a proper home.</h3><p>This growing library preserves the creators' real documents alongside the free introductory companion. The archive identifies original manuscripts, while duplicates and personal drafts stay out of public reading.</p></div><span className="archive-seal">FREE<br/><small>FOREVER<br/>TO READ</small></span></div>
       </section>

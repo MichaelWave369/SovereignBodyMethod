@@ -27,7 +27,7 @@ export const releaseCoverage=[
   status:'partial',statusText:'Related source material · stack unverified',
   detail:'Several published original manuscripts cover herbs, tinctures, supplements and oil pairings. The exact advertised standalone full stack and hormone-oriented instructions are not verified. Supplement amounts and herbal claims require independent safety review.',
   sources:[{id:'reference',title:'Supplement notes · Reference Appendices'},{id:'herbals',title:'Complete Herbals Guide'},{id:'herbal-sacred',title:'Sacred Herbal Medicine'},{id:'tinctures',title:'Herbal Medicine & Tinctures'},{id:'herbals-addendum',title:'Herbals Guide · Additional Recipes'}],
-  anchor:'#library'
+  anchor:'#botanicals'
  },
  {
   id:'exercise',title:'Detailed Exercise Protocols',
