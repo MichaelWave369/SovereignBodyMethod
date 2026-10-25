@@ -1,0 +1,38 @@
+.hydration-studio{background:#e1ebe6;color:#213d33;padding:92px min(8vw,128px);scroll-margin-top:80px}
+.hydration-intro{display:flex;align-items:end;justify-content:space-between;gap:35px}
+.hydration-intro>div:first-child{max-width:760px}
+.hydration-intro h2{font:400 clamp(39px,4.4vw,65px)/1.15 'DM Serif Display',Georgia,serif;margin:18px 0 20px}
+.hydration-intro h2 em{color:#9a8357}
+.hydration-intro p:not(.eyebrow){font-size:14px;color:#5e766b;line-height:1.8}
+.hydration-total{min-width:160px;padding:20px;border-left:1px solid #abc5b4}
+.hydration-total strong{display:block;font:400 63px 'DM Serif Display',Georgia,serif}
+.hydration-total span{font-size:10px;letter-spacing:.13em;color:#688174}
+.hydration-notice{border-left:3px solid #aa8e5a;background:#f4f2e9;font-size:12px;line-height:1.8;color:#617067;padding:16px 20px;margin:30px 0 34px}
+.hydration-controls{display:flex;gap:15px;align-items:end;margin-bottom:23px}
+.hydration-controls label{font-size:10px;letter-spacing:.12em;font-weight:700;color:#5d796a;display:flex;flex-direction:column;gap:9px;flex:1}
+.hydration-controls label:nth-child(2){flex:1.4}
+.hydration-controls select,.hydration-controls input{background:#f8f9f1;border:1px solid #b2cabc;color:#1e3b2e;min-height:47px;padding:12px;font-size:13px;min-width:0;width:100%}
+.hydration-controls>span{font-size:12px;white-space:nowrap;color:#50705e;padding-bottom:14px}
+.hydration-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.75fr);gap:18px;align-items:start}
+.hydration-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.hydration-card{border:1px solid #c1d2c7;background:#f7f9f2;padding:19px;min-width:0}
+.hydration-card.selected{border-color:#4b7960;box-shadow:inset 0 0 0 1px #4b7960}
+.hydration-card-top{display:flex;justify-content:space-between;gap:10px;font-size:10px;letter-spacing:.09em;color:#678071}
+.hydration-card h3{font:400 25px/1.23 'DM Serif Display',Georgia,serif;margin:18px 0 12px}
+.hydration-card p{font-size:12px;line-height:1.7;color:#5b7262;min-height:38px}
+.hydration-card-actions{display:flex;justify-content:space-between;align-items:center;gap:9px;border-top:1px solid #cbd8cc;padding-top:11px;margin-top:15px}
+.hydration-card-actions button{background:none;border:0;font-size:11px;font-weight:700;color:#24583c;padding:4px 0}
+.hydration-card-actions label{display:flex;gap:6px;font-size:11px;color:#48674d}
+.hydration-card-actions input{accent-color:#37654a}
+.hydration-focus{position:sticky;top:95px;background:#234738;color:#f9f7ed;padding:27px}
+.hydration-focus h3{font:400 40px 'DM Serif Display',Georgia,serif;margin:16px 0 4px}
+.hydration-focus .eyebrow{color:#d1b98b}
+.hydration-focus-day{color:#b7cdbe;font-size:11px}
+.hydration-focus strong{display:block;font:400 27px/1.2 'DM Serif Display',Georgia,serif;margin:27px 0 12px}
+.hydration-focus>p:not(.eyebrow){font-size:12px;line-height:1.8;color:#d3e1d4}
+.hydration-focus .hydration-focus-disclaimer{border-top:1px solid #698875;padding-top:14px;font-size:11px;color:#bccfbe}
+.hydration-focus a{display:inline-block;border-bottom:1px solid #c7b88b;font-size:11px;font-weight:700;color:#e8d4a8;margin-top:14px;padding-bottom:5px}
+.hydration-empty{border:1px solid #c0d0c3;background:#f6f8f1;color:#4d7056;padding:20px;line-height:1.7;font-size:13px}
+@media(max-width:950px){.hydration-layout{grid-template-columns:1fr}.hydration-focus{position:static}.hydration-controls{flex-wrap:wrap}.hydration-controls>span{width:100%;padding:0}}
+@media(max-width:680px){.hydration-studio{padding:65px 20px}.hydration-intro{display:block}.hydration-total{border-left:0;border-top:1px solid #bed1c3;margin:20px 0;padding:20px 0}.hydration-total strong{font-size:48px}.hydration-controls{display:block}.hydration-controls label{margin-bottom:12px}.hydration-cards{grid-template-columns:1fr}.hydration-card p{min-height:0}}
+@media print{.hydration-studio{display:none!important}}

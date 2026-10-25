@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import ArchiveLibrary from './ArchiveLibrary.jsx';
 import MealPlanner from './MealPlanner.jsx';
 import MovementStudio from './MovementStudio.jsx';
+import HydrationStudio from './HydrationStudio.jsx';
+import OriginalReleases from './OriginalReleases.jsx';
 import { completedFromStorage, journey, phases, subjects } from './method.js';
 
 const STORAGE='sovereign-body-method.days.v1';
@@ -62,10 +64,12 @@ function App() {
       </section>
       <MovementStudio/>
       <MealPlanner/>
+      <HydrationStudio/>
       <section className="section library-section" id="library">
         <SectionHeading eyebrow="03 / THE METHOD LIBRARY" title={<>A whole world of<br/><em>possibilities.</em></>}>Explore the themes that shape the Method. Explore the original collection below. Read and download approved originals when the source archive is published.</SectionHeading>
         <div className="subject-grid">{subjects.map(s=><button className="subject" onClick={()=>setSelectedSubject(s)} key={s.name}><span className="eyebrow">{s.eyebrow}</span><strong>{s.name}</strong><p>{s.summary}</p><span className="subject-arrow">↗</span></button>)}</div>
         <ArchiveLibrary/>
+        <OriginalReleases/>
         <div className="archive-banner"><div><p className="eyebrow">THE ORIGINAL ARCHIVE</p><h3>The full source collection deserves a proper home.</h3><p>This growing library preserves the creators' real documents alongside the free introductory companion. The archive identifies original manuscripts, while duplicates and personal drafts stay out of public reading.</p></div><span className="archive-seal">FREE<br/><small>FOREVER<br/>TO READ</small></span></div>
       </section>
       <section className="origin-section" id="origin"><div className="origin-symbol"><Mark/></div><div className="origin-copy"><p className="eyebrow">04 / FROM US TO YOU</p><h2>Made together.<br/><em>Shared with everyone.</em></h2><p>The Sovereign Body Method is a collaboration between Mikey and Larrina, born out of a desire to connect practical daily well-being with a wider sense of personal meaning and freedom.</p><p>It was once offered through a storefront. This new chapter is about opening a door. No account, payment, or agreement with every idea is required to begin.</p><div className="signature">Mikey + Larrina <span>✳</span></div></div></section>
