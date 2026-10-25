@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useState} from 'react';
 import {TYPES,WEEKS,dayRecipes,searchRecipes,rangeRecipes,shoppingRows,shoppingListText,readChecked,readFavorites,remainingShoppingRows,weeklyMenu,weekForDay} from './mealUtils.js';
 import WeekOverview from './WeekOverview.jsx';
+import BudgetStudio from './BudgetStudio.jsx';
 import OfflineKitchen from './OfflineKitchen.jsx';
 import './mealPlanner.css';
 
@@ -211,6 +212,7 @@ export default function MealPlanner(){
         <div className="meal-shopping-buttons"><button type="button" onClick={copyShopping}>Copy items to buy ↗</button><button type="button" className="meal-outline-button" onClick={()=>printPage('shopping')}>Print shopping list ↗</button><button type="button" className="meal-shopping-reset" onClick={clearSelection}>Reset this period</button></div>
       </div>
       {copyFeedback&&<p className="meal-copy-feedback" role="status">{copyFeedback}</p>}
+      <BudgetStudio rows={rows} checked={checked} pantry={pantry} scope={scope} day={day}/>
       <div className="meal-shopping-body">
         {shoppingDays.map(n=><div className="meal-shopping-day" key={n}>
           <h4>Day {String(n).padStart(2,'0')}</h4>
