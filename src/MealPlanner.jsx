@@ -7,7 +7,6 @@ import './mealPlanner.css';
 
 const mealsUrl=import.meta.env.BASE_URL+'meals/recipes.json';
 const checkedKey='sovereign-body-method.meals.shopping.v1';
-const dayKey='sovereign-body-method.meals.day.v1';
 const favoritesKey='sovereign-body-method.meals.favorites.v1';
 const pantryKey='sovereign-body-method.meals.pantry.v1';
 
@@ -34,22 +33,17 @@ function RecipeCard({recipe,expanded,onToggle,isFavorite,onToggleFavorite}){
   </article>;
 }
 
-export default function MealPlanner(){
+export default function MealPlanner({day,onDayChange}){
+  const setDay=onDayChange;
   const [catalog,setCatalog]=useState({available:false,recipeCount:0,recipes:[]});
   const [loadError,setLoadError]=useState('');
   const [tab,setTab]=useState('day');
-  const [day,setDay]=useState(()=>{
-    try{const n=Number(localStorage.getItem(dayKey));return Number.isInteger(n)&&n>=1&&n<=30?n:1}catch{return 1}
-  });
   const [opened,setOpened]=useState('');
   const [query,setQuery]=useState('');
   const [filter,setFilter]=useState('all');
   const [seeAll,setSeeAll]=useState(false);
   const [scope,setScope]=useState('week1');
-  const [weekId,setWeekId]=useState(()=>weekForDay((()=>{
-    try{const n=Number(localStorage.getItem(dayKey));return Number.isInteger(n)&&n>=1&&n<=30?n:1}
-    catch{return 1}
-  })()).id);
+  const [weekId,setWeekId]=useState(()=>weekForDay(day).id);
   const [favorites,setFavorites]=useState(()=>{
     try{return readFavorites(localStorage.getItem(favoritesKey))}catch{return new Set()}
   });
@@ -72,7 +66,7 @@ export default function MealPlanner(){
       })}).catch(err=>{if(active)setLoadError(err.message)});
     return()=>{active=false};
   },[]);
-  useEffect(()=>{try{localStorage.setItem(dayKey,String(day))}catch{}},[day]);
+  useEffect(()=>{setWeekId(weekForDay(day).id)},[day]);
   useEffect(()=>{try{localStorage.setItem(checkedKey,JSON.stringify([...checked]))}catch{}},[checked]);
   useEffect(()=>{try{localStorage.setItem(favoritesKey,JSON.stringify([...favorites]))}catch{}},[favorites]);
   useEffect(()=>{try{localStorage.setItem(pantryKey,JSON.stringify([...pantry]))}catch{}},[pantry]);

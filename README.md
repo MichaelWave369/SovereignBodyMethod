@@ -95,3 +95,12 @@ A new \`#sound-studio\` section links the original frequency references, crystal
 ## Herb & Supplement Reading Library
 
 The website now has a source-grounded searchable index of **botanical names, essential oils and supplement ingredients** that occur in five approved original manuscripts. It records original source locations and counts but **does not recommend remedies, doses or stacks**, infer their safety, or reconstruct an unverified Gumroad purchase bundle. Readers can bookmark topics locally and consult official NIH and FDA evidence resources. Index JSON automatically joins the site's offline PWA. See \`docs/BOTANICAL-REFERENCE.md\`.
+
+
+## Your Daily Sovereign Dashboard
+
+The Daily Dashboard at \`#daily\` links the original **three daily recipes, repeating three-day movement template, 28-day infused-water calendar** and a clearly labeled **newly-authored reflection companion** for the one selected day. Day 29–30 correctly have no water item. Visitors can read the actual recipe ingredients/instructions from that view and move to the full manuals from each panel.
+
+All four areas now use one React-owned 1–30 day state, initially loaded from the existing \`sovereign-body-method.meals.day.v1\` browser setting. They also share existing *separate* optional progress counters for reflections, movements and infused-water; any checkmark is reversible and never treated as a medical result or a required streak. No source manuscripts are altered. The existing PWA caches the same JSON that the dashboard consumes. An accessible mobile "Explore" menu fixes the formerly hidden small-screen navigation.
+
+See \`docs/DAILY-DASHBOARD.md\` for source, offline and QA details.

@@ -2,17 +2,29 @@ import { useEffect, useState } from 'react';
 import ArchiveLibrary from './ArchiveLibrary.jsx';
 import MealPlanner from './MealPlanner.jsx';
 import MovementStudio from './MovementStudio.jsx';
+import DailyDashboard from './DailyDashboard.jsx';
+import {readDayPreference,SHARED_DAY_KEY,REFLECTION_KEY,MOVEMENT_KEY,HYDRATION_KEY} from './dailyUtils.js';
+import {readMovementDone} from './movementUtils.js';
+import {waterCompletion} from './hydrationUtils.js';
 import HydrationStudio from './HydrationStudio.jsx';
 import OriginalReleases from './OriginalReleases.jsx';
 import SoundStudio from './SoundStudio.jsx';
 import BotanicalStudio from './BotanicalStudio.jsx';
 import { completedFromStorage, journey, phases, subjects } from './method.js';
 
-const STORAGE='sovereign-body-method.days.v1';
+const STORAGE=REFLECTION_KEY;
 function Mark({small=false}) { return <span className={'mark '+(small?'mark-small':'')} aria-hidden="true"><i/><i/><i/></span>; }
 function SectionHeading({eyebrow,title,children}) {return <div className="section-heading"><p className="eyebrow">{eyebrow}</p><h2>{title}</h2>{children&&<p className="section-intro">{children}</p>}</div>;}
 function App() {
-  const [current,setCurrent]=useState(1);
+  const [current,setCurrent]=useState(()=>{
+    try{return readDayPreference(window.localStorage.getItem(SHARED_DAY_KEY))}catch{return 1}
+  });
+  const [movementDone,setMovementDone]=useState(()=>{
+    try{return readMovementDone(window.localStorage.getItem(MOVEMENT_KEY))}catch{return new Set()}
+  });
+  const [hydrationDone,setHydrationDone]=useState(()=>{
+    try{return waterCompletion(window.localStorage.getItem(HYDRATION_KEY))}catch{return new Set()}
+  });
   const [completed,setCompleted]=useState(()=> {
     try { return completedFromStorage(window.localStorage.getItem(STORAGE)); } catch { return new Set(); }
   });
@@ -21,8 +33,13 @@ function App() {
   const done=completed.size;
 
   useEffect(()=>{ try { window.localStorage.setItem(STORAGE,JSON.stringify([...completed].sort((a,b)=>a-b))); } catch {} },[completed]);
+  useEffect(()=>{try{window.localStorage.setItem(SHARED_DAY_KEY,String(current))}catch{}},[current]);
+  useEffect(()=>{try{window.localStorage.setItem(MOVEMENT_KEY,JSON.stringify([...movementDone].sort((a,b)=>a-b)))}catch{}},[movementDone]);
+  useEffect(()=>{try{window.localStorage.setItem(HYDRATION_KEY,JSON.stringify([...hydrationDone].sort((a,b)=>a-b)))}catch{}},[hydrationDone]);
   useEffect(()=>{ document.title=selectedSubject ? selectedSubject.name+' | The Sovereign Body Method' : 'The Sovereign Body Method | Free for Everyone'; },[selectedSubject]);
   function toggleDay(n) { setCompleted(previous => { const next=new Set(previous); if(next.has(n))next.delete(n);else next.add(n);return next; }); }
+  function toggleMovement(n) {setMovementDone(previous=>{const next=new Set(previous);if(next.has(n))next.delete(n);else next.add(n);return next})}
+  function toggleHydration(n) {if(n>28||n<1)return;setHydrationDone(previous=>{const next=new Set(previous);if(next.has(n))next.delete(n);else next.add(n);return next})}
   function nextDay(step){ setCurrent(v=>Math.min(30,Math.max(1,v+step))); }
   function navigate(n){setCurrent(n);document.getElementById('journey').scrollIntoView({behavior:'smooth',block:'start'});}
   return <>
@@ -30,7 +47,17 @@ function App() {
     <div className="announcement"><span className="announcement-star">✳</span> THE METHOD, FREELY SHARED <span className="announcement-star">✳</span> NO PAYWALL. NO GATEKEEPING.</div>
     <header className="header">
       <a className="logo" href="#top" aria-label="Sovereign Body Method home"><Mark small/><span>THE SOVEREIGN<br/><strong>BODY METHOD</strong></span></a>
-      <nav aria-label="Main navigation"><a href="#philosophy">Philosophy</a><a href="#journey">Journey</a><a href="#movement">Movement</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
+      <nav aria-label="Main navigation"><a href="#daily">Your day</a><a href="#philosophy">Philosophy</a><a href="#journey">Journey</a><a href="#movement">Movement</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
+      <details className="mobile-navigation">
+        <summary>Explore <span aria-hidden="true">☰</span></summary>
+        <nav aria-label="Mobile site navigation">
+          <a href="#daily">Your day</a><a href="#journey">30-day companion</a>
+          <a href="#movement">Movement & breathing</a><a href="#meals">Meals & budget</a>
+          <a href="#hydration">Infused water</a><a href="#library">Original library</a>
+          <a href="#sound-studio">Sound & crystals</a><a href="#botanicals">Botanicals</a>
+          <a href="#original-releases">Original releases</a><a href="#origin">Our story</a>
+        </nav>
+      </details>
       <a className="header-cta" href="#journey">Begin here <span aria-hidden="true">↗</span></a>
     </header>
     <main id="main">
@@ -40,7 +67,7 @@ function App() {
           <p className="hero-overline">A way back to yourself</p>
           <h1>Your body.<br/>Your rhythm.<br/><em>Your sovereignty.</em></h1>
           <p className="hero-lead">A grounded and expansive approach to well-being. Nourishment, movement, rest, nature, reflection, and the freedom to build a practice that belongs to you.</p>
-          <div className="hero-actions"><a className="button button-light" href="#journey">Explore the 30 days <span aria-hidden="true">→</span></a><a className="text-link" href="#meals">Explore the original meals <span aria-hidden="true">↘</span></a></div>
+          <div className="hero-actions"><a className="button button-light" href="#daily">Open your daily dashboard <span aria-hidden="true">→</span></a><a className="text-link" href="#meals">Explore the original meals <span aria-hidden="true">↘</span></a></div>
           <div className="byline"><span className="line"/> Created with care by <strong>Mikey &amp; Larrina</strong></div>
         </div>
         <div className="hero-art" aria-label="Abstract concentric circles and organic landscape motif" role="img">
@@ -56,6 +83,9 @@ function App() {
           <div className="principles"><div><span>01</span><strong>Start where you are</strong><small>No perfect starting line.</small></div><div><span>02</span><strong>Listen, don't force</strong><small>Your capacity matters.</small></div><div><span>03</span><strong>Keep your agency</strong><small>You decide what fits.</small></div></div>
         </div>
       </section>
+      <DailyDashboard day={current} onDayChange={setCurrent}
+        reflectionDone={completed} movementDone={movementDone} hydrationDone={hydrationDone}
+        onToggleReflection={toggleDay} onToggleMovement={toggleMovement} onToggleHydration={toggleHydration}/>
       <section className="section journey-section" id="journey">
         <div className="journey-head"><SectionHeading eyebrow="02 / YOUR STARTING POINT" title={<>Thirty days.<br/><em>Your own pace.</em></>}>A gentle interactive companion inspired by the Method's 30-day structure. These are newly written starter reflections, not the original book's daily instructions.</SectionHeading><div className="journey-progress"><span>YOUR PROGRESS</span><strong>{done}<small> / 30</small></strong><div className="progress-track"><div style={{width:(done/30*100)+'%'}}/></div><small>Stored only in this browser. No account needed.</small></div></div>
         <div className="phase-grid">{phases.map((phase,i)=><button type="button" className={'phase-card '+(day.phase===phase.title?'active':'')} onClick={()=>navigate(i===0?1:i===1?8:i===2?15:22)} key={phase.title}><span className="phase-index">0{i+1} / {phase.tag}</span><strong>{phase.title}</strong><small>{phase.days}</small><p>{phase.note}</p><span className="phase-arrow">↗</span></button>)}</div>
@@ -64,9 +94,9 @@ function App() {
           <article className="day-detail"><div className="day-label"><span>DAY {String(day.day).padStart(2,'0')} / 30</span><span>{day.phase.toUpperCase()} · {day.rhythm.toUpperCase()}</span></div><h3>{day.name}<span className="title-asterisk">✳</span></h3><p className="day-prompt">{day.prompt}</p><div className="today-task"><span className="task-icon">✦</span><div><strong>A reflection, not a prescription</strong><p>Meet yourself wherever you are today. Small and sustainable counts.</p></div></div><div className="day-buttons"><button className={'button '+(completed.has(day.day)?'button-complete':'button-dark')} onClick={()=>toggleDay(day.day)}>{completed.has(day.day)?'✓ Marked complete':'Mark today complete'}</button><div className="step-buttons"><button aria-label="Previous day" disabled={current===1} onClick={()=>nextDay(-1)}>←</button><button aria-label="Next day" disabled={current===30} onClick={()=>nextDay(1)}>→</button></div></div></article>
         </div>
       </section>
-      <MovementStudio/>
-      <MealPlanner/>
-      <HydrationStudio/>
+      <MovementStudio day={current} onDayChange={setCurrent} completed={movementDone} onToggleDone={toggleMovement}/>
+      <MealPlanner day={current} onDayChange={setCurrent}/>
+      <HydrationStudio day={current} onDayChange={setCurrent} completed={hydrationDone} onToggleDone={toggleHydration}/>
       <section className="section library-section" id="library">
         <SectionHeading eyebrow="03 / THE METHOD LIBRARY" title={<>A whole world of<br/><em>possibilities.</em></>}>Explore the themes that shape the Method. Explore the original collection below. Read and download approved originals when the source archive is published.</SectionHeading>
         <div className="subject-grid">{subjects.map(s=><button className="subject" onClick={()=>setSelectedSubject(s)} key={s.name}><span className="eyebrow">{s.eyebrow}</span><strong>{s.name}</strong><p>{s.summary}</p><span className="subject-arrow">↗</span></button>)}</div>
