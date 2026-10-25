@@ -48,3 +48,22 @@
 @media(max-width:1100px){.daily-dashboard{padding:75px 5vw}.daily-day-grid{grid-template-columns:repeat(10,1fr)}}
 @media(max-width:720px){.daily-dashboard{padding:62px 20px}.daily-head{display:block}.daily-index{border-left:0;border-top:1px solid #bcc9bc;padding:15px 0;margin-top:22px}.daily-index strong{font-size:44px}.daily-picker{padding:17px}.daily-day-grid{grid-template-columns:repeat(6,1fr)}.daily-panels,.daily-progress{grid-template-columns:1fr}.daily-progress{gap:14px}.daily-panel{padding:21px}.daily-picker-title h3{font-size:35px}}
 @media print{.daily-dashboard{display:none!important}}
+
+.pocket-print-sheet{display:none}
+@media print{
+ [data-sovereign-print="daily"] #root>main>#daily{display:block!important;padding:0!important;margin:0!important;background:#fff!important;color:#151515!important}
+ [data-sovereign-print="daily"] #daily>*:not(.pocket-print-sheet){display:none!important}
+ [data-sovereign-print="daily"] #daily>.pocket-print-sheet{display:block!important;background:#fff!important;color:#151515!important;font:10pt/1.45 Georgia,serif}
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet header{padding:0 0 12px;border-bottom:1px solid #777}
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet header strong{font:700 14pt Arial,sans-serif;letter-spacing:.08em}
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet h1{font:400 24pt Georgia,serif;margin:16px 0}
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet h2{font:700 14pt Georgia,serif;margin:20px 0 12px;border-bottom:1px solid #bbb;padding-bottom:5px}
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet h3{font:700 12pt Georgia,serif;margin:11px 0 5px}
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet h4{font:700 10pt Georgia,serif;margin:12px 0 3px}
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet p,
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet li{font-size:9pt;line-height:1.5}
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet li{margin:3px 0}
+ [data-sovereign-print="daily"] #daily .pocket-print-recipe{break-inside:avoid-page;border-bottom:1px solid #bbb;padding-bottom:15px}
+ [data-sovereign-print="daily"] #daily .pocket-print-motion{break-inside:avoid-page}
+ [data-sovereign-print="daily"] #daily .pocket-print-sheet footer{margin-top:18px;border-top:1px solid #aaa;padding-top:8px;font:8pt Arial,sans-serif;color:#555}
+}

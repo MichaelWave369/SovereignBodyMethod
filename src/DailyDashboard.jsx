@@ -1,5 +1,6 @@
 import {useEffect,useMemo,useState} from 'react';
 import {dailySources,dayProgress,uniqueCompletedDays} from './dailyUtils.js';
+import PocketPanel from './PocketPanel.jsx';
 import './dailyDashboard.css';
 
 const BASE=import.meta.env.BASE_URL;
@@ -36,12 +37,21 @@ export default function DailyDashboard({
   return()=>{active=false};
  },[]);
  useEffect(()=>{setExpandedMeal(null)},[day]);
+ useEffect(()=>{
+  const cleanup=()=>delete document.documentElement.dataset.sovereignPrint;
+  window.addEventListener('afterprint',cleanup);
+  return()=>{window.removeEventListener('afterprint',cleanup);cleanup()};
+ },[]);
  const view=useMemo(()=>dailySources(day,data.meals,data.schedule,data.water),
   [day,data.meals,data.schedule,data.water]);
  const progress=dayProgress(day,reflectionDone,movementDone,hydrationDone);
  const markedDays=uniqueCompletedDays(reflectionDone,movementDone,hydrationDone);
  if(!view||!progress)return null;
  function change(delta){onDayChange(v=>Math.max(1,Math.min(30,v+delta)))}
+ function printToday(){
+  document.documentElement.dataset.sovereignPrint='daily';
+  window.print();
+ }
  return <section id="daily" className="daily-dashboard" aria-labelledby="daily-heading">
   <div className="daily-head">
    <div><p className="eyebrow">YOUR DAILY SOVEREIGN HOME</p>
@@ -115,6 +125,31 @@ export default function DailyDashboard({
      <p>The water calendar ends on Day 28, so there is no water checkmark for this day.</p>}
    </div>
   </div>
+  <PocketPanel day={day} onPrint={printToday}/>
   <p className="daily-footer">Your selected day and progress are stored only in this browser and shared across the site. No account, no streak pressure, no automatic claims of medical benefits. The site's original source data is cached for supported offline visits.</p>
+  <section className="pocket-print-sheet" aria-label={'Printable Sovereign Body Method Day '+day}>
+    <header><strong>THE SOVEREIGN BODY METHOD</strong><p>Mikey &amp; Larrina · Day {String(day).padStart(2,'0')} · Original manuals + new reflection companion</p></header>
+    <h1>Day {day}: Your daily plan</h1>
+    <p className="pocket-print-note">Your day's recipe, movement and water sources are preserved as published. This is a convenient printout, not medical or nutritional advice.</p>
+    <h2>Original smoothie, salad and dinner</h2>
+    {view.meals.length===3?view.meals.map(recipe=><article className="pocket-print-recipe" key={recipe.id}>
+      <h3>{recipe.type.charAt(0).toUpperCase()+recipe.type.slice(1)} · {recipe.title}</h3>
+      <p>Prep: {recipe.prepTime} · Original servings: {recipe.servings} · Source: {recipe.sourceFile}</p>
+      <h4>Ingredients</h4><ul>{recipe.ingredients.map((part,i)=><li key={i}>{part}</li>)}</ul>
+      <h4>Instructions</h4><ol>{recipe.instructions.map((step,i)=><li key={i}>{step}</li>)}</ol>
+      {recipe.variations?.length>0&&<p><strong>Original variations:</strong> {recipe.variations.join(' · ')}</p>}
+    </article>):<p>Full original recipes not available in this build.</p>}
+    <h2>Movement · original repeating three-day rhythm</h2>
+    {view.movement?<section className="pocket-print-motion"><h3>{view.movement.title}</h3><p>{view.movement.sessionFormat}</p>
+      <ol>{view.movement.sequence.map((step,i)=><li key={i}>{step}</li>)}</ol>
+      <p><strong>Source:</strong> {view.movement.sourceFile}; a repeating template, not an individualized prescription.</p>
+    </section>:<p>Original movement source unavailable.</p>}
+    <h2>Optional infused water</h2>
+    {view.water?<p><strong>{view.water.blend}</strong> ({view.water.weekday}): {view.water.notes} · {view.water.sourceFile}</p>:
+      <p>{view.waterScheduleEnded?'The original infused-water schedule ends on Day 28.':'Original water entry unavailable.'}</p>}
+    <h2>Optional reflection · newly written website companion</h2>
+    <p><strong>{view.reflection.name}:</strong> {view.reflection.prompt}</p>
+    <footer>Educational archive only. Adapt movement to your needs, check recipe allergens and food safety, and consult qualified professionals for individualized health advice. Sources: original Sovereign Body Method manuscripts by Mikey &amp; Larrina.</footer>
+  </section>
  </section>;
 }
