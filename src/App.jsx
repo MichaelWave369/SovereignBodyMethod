@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ArchiveLibrary from './ArchiveLibrary.jsx';
 import { completedFromStorage, journey, phases, subjects } from './method.js';
 
 const STORAGE='sovereign-body-method.days.v1';
@@ -58,9 +59,10 @@ function App() {
         </div>
       </section>
       <section className="section library-section" id="library">
-        <SectionHeading eyebrow="03 / THE METHOD LIBRARY" title={<>A whole world of<br/><em>possibilities.</em></>}>Explore the themes that shape the Method. The original manuals, recipes, and teachings will be added here as their canonical files are verified for free publication.</SectionHeading>
+        <SectionHeading eyebrow="03 / THE METHOD LIBRARY" title={<>A whole world of<br/><em>possibilities.</em></>}>Explore the themes that shape the Method. Explore the original collection below. Read and download approved originals when the source archive is published.</SectionHeading>
         <div className="subject-grid">{subjects.map(s=><button className="subject" onClick={()=>setSelectedSubject(s)} key={s.name}><span className="eyebrow">{s.eyebrow}</span><strong>{s.name}</strong><p>{s.summary}</p><span className="subject-arrow">↗</span></button>)}</div>
-        <div className="archive-banner"><div><p className="eyebrow">THE ORIGINAL ARCHIVE</p><h3>The full source collection deserves a proper home.</h3><p>We're building this public library around the creators' original documents, not AI-rewritten stand-ins. Until those files are reviewed and published, this site is a free introductory companion.</p></div><span className="archive-seal">FREE<br/><small>FOREVER<br/>TO READ</small></span></div>
+        <ArchiveLibrary/>
+        <div className="archive-banner"><div><p className="eyebrow">THE ORIGINAL ARCHIVE</p><h3>The full source collection deserves a proper home.</h3><p>This growing library preserves the creators' real documents alongside the free introductory companion. The archive identifies original manuscripts, while duplicates and personal drafts stay out of public reading.</p></div><span className="archive-seal">FREE<br/><small>FOREVER<br/>TO READ</small></span></div>
       </section>
       <section className="origin-section" id="origin"><div className="origin-symbol"><Mark/></div><div className="origin-copy"><p className="eyebrow">04 / FROM US TO YOU</p><h2>Made together.<br/><em>Shared with everyone.</em></h2><p>The Sovereign Body Method is a collaboration between Mikey and Larrina, born out of a desire to connect practical daily well-being with a wider sense of personal meaning and freedom.</p><p>It was once offered through a storefront. This new chapter is about opening a door. No account, payment, or agreement with every idea is required to begin.</p><div className="signature">Mikey + Larrina <span>✳</span></div></div></section>
       <section className="section care-section" id="care"><div><p className="eyebrow">A NOTE ON CARE & CHOICE</p><h2>Curiosity and care<br/>can coexist.</h2></div><div><p>This site is educational, reflective and spiritual in places. It is not healthcare, diagnosis, or a treatment plan. Some traditional, celestial, chakra-based, or frequency-based frameworks are not supported as medical claims by clinical evidence.</p><p>If you are changing diet, exercise, herbs, supplements, or treatment, especially with a medical condition, medication use, pregnancy, or mobility concerns, consult an appropriately qualified professional. Stop any practice that causes pain, dizziness, or distress.</p><p>Your autonomy includes the right to question, adapt, or leave out any part.</p></div></section>
