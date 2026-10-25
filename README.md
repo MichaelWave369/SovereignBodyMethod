@@ -69,3 +69,7 @@ Beyond the original daily recipes, visitors can now:
 - Copy or print only the ingredients **still needed**, with all original measures and recipes still available.
 
 Favorites, pantry labels and purchased items use browser-only local storage; no personal information or shopping activity is sent to a server. Clearing local browser data clears them. The printed sheets are generated from the same author-sourced data as the live meal planner, with no added nutritional claims or automatic serving scaling.
+
+## Offline Kitchen Mode (PWA)
+
+After an online visit, supported browsers can cache the site, all 90 original recipes, and 21 readable manuscripts for offline access. Original Word downloads are optional, initiated by the reader. No accounts, analytics, or cross-device syncing. See docs/OFFLINE-KITCHEN.md for browser-specific steps, limitations, and tests.
