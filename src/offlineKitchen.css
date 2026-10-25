@@ -1,0 +1,22 @@
+.offline-kitchen{background:#243f33;color:#faf7ed;margin:37px 0 32px;padding:30px 35px;border:1px solid #54745b}
+.offline-kitchen-heading{display:flex;gap:22px;align-items:flex-start}
+.offline-kitchen-heading .eyebrow{color:#d5be8c}
+.offline-symbol{width:55px;height:55px;border:1px solid #adbb99;border-radius:50%;display:grid;place-items:center;flex:0 0 55px;color:#cfbd96;font-size:34px}
+.offline-kitchen-heading h3{font:400 clamp(27px,3vw,40px)/1.17 'DM Serif Display',Georgia,serif;margin:9px 0 12px}
+.offline-kitchen-heading p:not(.eyebrow){max-width:750px;color:#d0dccc;line-height:1.75;font-size:13px;margin-bottom:0}
+.offline-kitchen-details{margin:25px 0 0;border-top:1px solid #6b8770;padding-top:21px}
+.offline-state{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.offline-state strong{font-size:13px}
+.offline-state>span:last-child{color:#cad7c8;font-size:11px;margin-left:auto}
+.offline-dot{width:9px;height:9px;border:1px solid #edbe7d;border-radius:50%;display:inline-block;background:#745b35}
+.offline-dot.offline-ready{background:#8fc291;border-color:#8fc291}
+.offline-kitchen-note{font-size:12px;color:#dce4d7;line-height:1.65;margin-top:12px}
+.offline-kitchen-counter{font-size:11px;color:#c8d3c0;margin:14px 0}
+.offline-kitchen-error{color:#ffddd3;font-size:12px}
+.offline-actions{display:flex;flex-wrap:wrap;gap:9px;margin:19px 0 14px}
+.offline-actions button{border:1px solid #d3b989;background:#d3b989;color:#193226;font-size:12px;font-weight:700;padding:12px 15px;border-radius:2px}
+.offline-actions button.offline-outline{background:transparent;border-color:#abbda8;color:#f9f7e9}
+.offline-actions button:disabled{opacity:.4;cursor:not-allowed}
+.offline-kitchen-small{font-size:11px;line-height:1.8;color:#c6d4c7;margin:17px 0 0}
+@media(max-width:720px){.offline-kitchen{padding:24px 18px;margin-top:24px}.offline-kitchen-heading{gap:12px}.offline-symbol{flex-basis:37px;width:37px;height:37px;font-size:23px}.offline-state>span:last-child{margin-left:0}.offline-actions button{flex:1 1 170px}}
+@media print{.offline-kitchen{display:none!important}}

@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useState} from 'react';
 import {TYPES,WEEKS,dayRecipes,searchRecipes,rangeRecipes,shoppingRows,shoppingListText,readChecked,readFavorites,remainingShoppingRows,weeklyMenu,weekForDay} from './mealUtils.js';
 import WeekOverview from './WeekOverview.jsx';
+import OfflineKitchen from './OfflineKitchen.jsx';
 import './mealPlanner.css';
 
 const mealsUrl=import.meta.env.BASE_URL+'meals/recipes.json';
@@ -160,6 +161,7 @@ export default function MealPlanner(){
       <p>Thirty days, ninety original recipes, and a practical grocery checklist. Smoothies, salads and dinners exactly as they appear in the weekly manuals by Mikey and Larrina.</p></div>
       <div className="meal-stamp"><strong>{catalog.recipeCount||'90'}</strong><span>RECIPES<br/>IN THE ORIGINAL<br/>30-DAY COLLECTION</span></div>
     </div>
+    <OfflineKitchen/>
     <div className="meal-note"><span aria-hidden="true">✳</span><p>All recipes are reproduced from the creators' Word documents. Quantities are written for their original serving size (usually two people). Check allergens, food handling and any dietary restrictions. This is a meal-planning resource, not a personalized medical diet.</p></div>
     <div className="meal-tabs" role="group" aria-label="Meal planner view">
       {[
