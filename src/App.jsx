@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ArchiveLibrary from './ArchiveLibrary.jsx';
 import MealPlanner from './MealPlanner.jsx';
+import MovementStudio from './MovementStudio.jsx';
 import { completedFromStorage, journey, phases, subjects } from './method.js';
 
 const STORAGE='sovereign-body-method.days.v1';
@@ -25,7 +26,7 @@ function App() {
     <div className="announcement"><span className="announcement-star">✳</span> THE METHOD, FREELY SHARED <span className="announcement-star">✳</span> NO PAYWALL. NO GATEKEEPING.</div>
     <header className="header">
       <a className="logo" href="#top" aria-label="Sovereign Body Method home"><Mark small/><span>THE SOVEREIGN<br/><strong>BODY METHOD</strong></span></a>
-      <nav aria-label="Main navigation"><a href="#philosophy">Philosophy</a><a href="#journey">Journey</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
+      <nav aria-label="Main navigation"><a href="#philosophy">Philosophy</a><a href="#journey">Journey</a><a href="#movement">Movement</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
       <a className="header-cta" href="#journey">Begin here <span aria-hidden="true">↗</span></a>
     </header>
     <main id="main">
@@ -59,6 +60,7 @@ function App() {
           <article className="day-detail"><div className="day-label"><span>DAY {String(day.day).padStart(2,'0')} / 30</span><span>{day.phase.toUpperCase()} · {day.rhythm.toUpperCase()}</span></div><h3>{day.name}<span className="title-asterisk">✳</span></h3><p className="day-prompt">{day.prompt}</p><div className="today-task"><span className="task-icon">✦</span><div><strong>A reflection, not a prescription</strong><p>Meet yourself wherever you are today. Small and sustainable counts.</p></div></div><div className="day-buttons"><button className={'button '+(completed.has(day.day)?'button-complete':'button-dark')} onClick={()=>toggleDay(day.day)}>{completed.has(day.day)?'✓ Marked complete':'Mark today complete'}</button><div className="step-buttons"><button aria-label="Previous day" disabled={current===1} onClick={()=>nextDay(-1)}>←</button><button aria-label="Next day" disabled={current===30} onClick={()=>nextDay(1)}>→</button></div></div></article>
         </div>
       </section>
+      <MovementStudio/>
       <MealPlanner/>
       <section className="section library-section" id="library">
         <SectionHeading eyebrow="03 / THE METHOD LIBRARY" title={<>A whole world of<br/><em>possibilities.</em></>}>Explore the themes that shape the Method. Explore the original collection below. Read and download approved originals when the source archive is published.</SectionHeading>
