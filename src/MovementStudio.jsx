@@ -1,9 +1,8 @@
 import {useEffect,useMemo,useState} from 'react';
-import {PRACTICE_TYPES,BREATH_PATTERNS,practiceForDay,visiblePractices,readMovementDone,readPracticeBookmarks} from './movementUtils.js';
+import {PRACTICE_TYPES,BREATH_PATTERNS,practiceForDay,visiblePractices,readPracticeBookmarks} from './movementUtils.js';
 import './movementStudio.css';
 
 const sourceUrl=import.meta.env.BASE_URL+'movement/studio.json';
-const doneKey='sovereign-body-method.movement.done.v1';
 const bookmarksKey='sovereign-body-method.movement.bookmarks.v1';
 
 function BreathPacer(){
@@ -74,18 +73,15 @@ function PracticeCard({item,open,onToggle,saved,onBookmark}){
   </article>;
 }
 
-export default function MovementStudio(){
+export default function MovementStudio({day,onDayChange,completed,onToggleDone}){
+  const setDay=onDayChange;
   const [data,setData]=useState({available:false,protocols:[],schedule:null});
   const [loadError,setLoadError]=useState('');
   const [tab,setTab]=useState('today');
-  const [day,setDay]=useState(1);
   const [group,setGroup]=useState('All');
   const [query,setQuery]=useState('');
   const [savedOnly,setSavedOnly]=useState(false);
   const [opened,setOpened]=useState('');
-  const [completed,setCompleted]=useState(()=>{
-    try{return readMovementDone(localStorage.getItem(doneKey))}catch{return new Set()}
-  });
   const [bookmarks,setBookmarks]=useState(()=>{
     try{return readPracticeBookmarks(localStorage.getItem(bookmarksKey))}catch{return new Set()}
   });
@@ -95,14 +91,11 @@ export default function MovementStudio(){
       .then(json=>{if(active)setData(json)}).catch(e=>{if(active)setLoadError(e.message)});
     return()=>{active=false};
   },[]);
-  useEffect(()=>{try{localStorage.setItem(doneKey,JSON.stringify([...completed].sort((a,b)=>a-b)))}catch{}},[completed]);
   useEffect(()=>{try{localStorage.setItem(bookmarksKey,JSON.stringify([...bookmarks]))}catch{}},[bookmarks]);
   const today=practiceForDay(day,data.schedule);
   const practices=useMemo(()=>visiblePractices(data.protocols,group,query).filter(p=>!savedOnly||bookmarks.has(p.id)),[data.protocols,group,query,savedOnly,bookmarks]);
 
-  function toggleDay(n){
-    setCompleted(old=>{const next=new Set(old);if(next.has(n))next.delete(n);else next.add(n);return next});
-  }
+  function toggleDay(n){onToggleDone(n)}
   function toggleBookmark(id){
     setBookmarks(old=>{const next=new Set(old);if(next.has(id))next.delete(id);else next.add(id);return next});
   }
