@@ -57,7 +57,7 @@ export default function MealPlanner(){
   useEffect(()=>{try{localStorage.setItem(checkedKey,JSON.stringify([...checked]))}catch{}},[checked]);
 
   const recipes=catalog.recipes;
-  const today'sMeals=useMemo(()=>dayRecipes(recipes,day),[recipes,day]);
+  const todaysMeals=useMemo(()=>dayRecipes(recipes,day),[recipes,day]);
   const searchMatches=useMemo(()=>searchRecipes(recipes,query,filter),[recipes,query,filter]);
   const shoppingMeals=useMemo(()=>rangeRecipes(recipes,scope,day),[recipes,scope,day]);
   const rows=useMemo(()=>shoppingRows(shoppingMeals),[shoppingMeals]);
@@ -123,7 +123,7 @@ export default function MealPlanner(){
         {Array.from({length:30},(_,i)=>i+1).map(n=><button key={n} type="button" className={n===day?'active':''} aria-pressed={n===day} onClick={()=>setActiveDay(n)} aria-label={'View meals for day '+n}>{String(n).padStart(2,'0')}</button>)}
       </div>
       <div className="meal-day-actions"><p>Day {day} includes one smoothie, one salad and one dinner.</p><button type="button" onClick={()=>openShopping(true)}>Shopping list for day {day} ↗</button></div>
-      <div className="meal-recipe-grid">{recipeList(today'sMeals)}</div>
+      <div className="meal-recipe-grid">{recipeList(todaysMeals)}</div>
       {todaysMeals.length!==3&&<p role="alert">One or more recipes are missing for this day. Please consult the original weekly Word document.</p>}
     </div>}
     {catalog.available&&tab==='search'&&<div className="meal-search-view">
