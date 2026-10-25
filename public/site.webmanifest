@@ -1,0 +1,19 @@
+{
+  "name": "The Sovereign Body Method",
+  "short_name": "Sovereign Body",
+  "description": "90 original recipes, 30 days, and a free reading library by Mikey & Larrina.",
+  "id": "/SovereignBodyMethod/",
+  "start_url": "/SovereignBodyMethod/",
+  "scope": "/SovereignBodyMethod/",
+  "display": "standalone",
+  "background_color": "#f5f2e9",
+  "theme_color": "#183027",
+  "icons": [
+    {
+      "src": "mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
