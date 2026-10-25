@@ -19,7 +19,7 @@ export const releaseCoverage=[
   status:'partial',statusText:'Related original guides · bundle unverified',
   detail:'Original frequency tables and crystal/energy practices are published. The advertised standalone sound-healing product and its exact six-ritual package cannot be confirmed from this ZIP alone. Sound frequencies and energetic healing claims are spiritual interpretations, not established treatments.',
   sources:[{id:'reference',title:'Sound frequencies · Reference Appendices'},{id:'crystals',title:'Crystal & Energy Work'},{id:'channels',title:'Sacred Channels'}],
-  anchor:'#library'
+  anchor:'#sound-studio'
  },
  {
   id:'herbs',title:'Supplement & Herb Mastery Guide',

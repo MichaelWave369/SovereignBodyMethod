@@ -87,3 +87,7 @@ The **Hydration** section imports the complete original 28-day fruit-and-herb in
 ## Grocery Budget Studio (local-only prices)
 
 The Meals → Shopping List tab now includes a **Budget Studio** built on the exact same original ingredient lines. It imports the three historical food-only budget approaches from `Reference_Appendices.docx` (college, RV, standard), keeping them explicitly attributed and not presenting old figures as current prices. Users enter estimated USD costs per original ingredient line, see missing-price counts, set their own spending caps, and view bought vs still-needed subtotals. Pantry items are excluded; no amount or duplicated ingredient is silently merged or scaled. All settings remain on-device, and the budget source guide is cached for offline reading. The exact separate Gumroad Budget Wellness package remains unverified. See `docs/BUDGET-STUDIO.md`.
+
+## Sound & Crystal Explorer
+
+A new \`#sound-studio\` section links the original frequency references, crystal traditions and sacred channel manuscript. Its index extracts only **source-mentioned** frequencies and crystal keywords from the 21 approved public reader documents. A separate user-controlled low-level sine-tone demo is for simple listening experiments, **not healing or medical treatment**. No unverified Gumroad rituals or source audio recordings are fabricated. The historical release remains **partially recovered** in the product crosswalk. All textual index data joins the existing offline PWA. See \`docs/SOUND-CRYSTAL-EXPLORER.md\`.
