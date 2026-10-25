@@ -104,3 +104,8 @@ The Daily Dashboard at \`#daily\` links the original **three daily recipes, repe
 All four areas now use one React-owned 1–30 day state, initially loaded from the existing \`sovereign-body-method.meals.day.v1\` browser setting. They also share existing *separate* optional progress counters for reflections, movements and infused-water; any checkmark is reversible and never treated as a medical result or a required streak. No source manuscripts are altered. The existing PWA caches the same JSON that the dashboard consumes. An accessible mobile "Explore" menu fixes the formerly hidden small-screen navigation.
 
 See \`docs/DAILY-DASHBOARD.md\` for source, offline and QA details.
+
+
+## Sovereign Pocket: print + private on-device backups
+
+The Daily Dashboard now offers **Print today's complete plan** (or browser Save as PDF) using original source recipe steps, movement sequence and water blend, plus clearly distinguished introductory reflection. A **Download private backup** button exports only the 11 allowlisted local Sovereign Body preferences. Restoring requires validation, preview, explicit replacement confirmation and a reload. No unrelated browser storage, accounts, credentials or manuscript source data is exported; personal budget prices are part of the backup, which should be kept private because it is unencrypted. See \`docs/SOVEREIGN-POCKET.md\`.

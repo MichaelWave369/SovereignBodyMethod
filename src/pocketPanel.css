@@ -1,0 +1,28 @@
+.pocket-panel{background:#e8e9d9;color:#203d2e;margin-top:24px;padding:28px;border:1px solid #b5c7b2}
+.pocket-head{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.pocket-head>div{max-width:790px}
+.pocket-head h3{font:400 clamp(29px,3.5vw,46px)/1.16 'DM Serif Display',Georgia,serif;margin:10px 0 16px}
+.pocket-head p:not(.eyebrow){color:#647767;line-height:1.7;font-size:12px}
+.pocket-symbol{border:1px solid #a8b9a3;border-radius:50%;width:75px;height:75px;display:grid;place-items:center;flex:0 0 75px;font-size:35px;color:#658667}
+.pocket-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px}
+.pocket-action{padding:19px;background:#f8f8ef;border:1px solid #c5d1c0;min-width:0;display:flex;flex-direction:column;gap:10px}
+.pocket-action>strong{font-size:12px;line-height:1.5;color:#2e4937}
+.pocket-action p{font-size:11px;color:#617564;line-height:1.65;flex:1}
+.pocket-action button,.pocket-restore-button{background:#294d36;color:#f9f8e9;border:1px solid #294d36;padding:12px 14px;font-size:11px;font-weight:700;line-height:1.5}
+.pocket-file{border:1px solid #58765a;background:#e1e9da;display:flex;flex-direction:column;gap:10px;align-items:flex-start;color:#294d36;font-size:12px;font-weight:700;padding:12px}
+.pocket-file input{width:100%;max-width:100%;font-size:11px;color:#385743}
+.pocket-preview{background:#fffef7;border:1px solid #a9bdad;margin-top:19px;padding:23px}
+.pocket-preview h4{font:400 26px 'DM Serif Display',Georgia,serif;margin:0 0 12px}
+.pocket-preview p{font-size:12px;line-height:1.75;color:#526f59}
+.pocket-stats{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}
+.pocket-stats span{border:1px solid #bbcbb8;padding:8px 11px;background:#edf2e9;font-size:11px;color:#405e47}
+.pocket-stats strong{font-size:14px;color:#2a4b33}
+.pocket-consent{display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.6;margin:20px 0;color:#405d47}
+.pocket-consent input{margin-top:4px;accent-color:#295d3e}
+.pocket-restore-button:disabled{opacity:.45;cursor:not-allowed}
+.pocket-cancel-button{background:transparent;border:0;margin-left:12px;text-decoration:underline;font-size:12px;color:#375945;padding:12px}
+.pocket-feedback{min-height:0;font-size:12px;color:#325c39;margin:14px 0;line-height:1.5}
+.pocket-privacy{font-size:11px;line-height:1.75;color:#708474;max-width:900px;margin:16px 0 0}
+@media(max-width:920px){.pocket-actions{grid-template-columns:1fr}.pocket-action p{flex:auto}.pocket-action button{align-self:flex-start}}
+@media(max-width:720px){.pocket-panel{padding:20px 15px}.pocket-symbol{display:none}.pocket-action button{align-self:stretch}.pocket-cancel-button{display:block;margin:8px 0 0}}
+@media print{.pocket-panel{display:none!important}}
