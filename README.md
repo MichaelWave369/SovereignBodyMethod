@@ -77,3 +77,9 @@ After an online visit, supported browsers can cache the site, all 90 original re
 ## Movement and Breathing Studio
 
 A new **Movement** area presents 23 original protocols with full authored step-by-step instructions, modifications and source-attributed claims, a repeating three-day workout schedule mapped to the 30-day journey, browser-local bookmarks and practiced-day notes, and an optional start/pause/reset breathing count guide. Source comes only from the approved Word manuals and is re-imported during every build. **No independently validated medical benefits are claimed.** Original manuscripts and protocol steps are available offline after the normal first online PWA cache completes. See `docs/MOVEMENT-STUDIO.md`.
+
+## Legacy Gumroad collection coverage and 28-day water planner
+
+The site now inventories all nine historical Gumroad listings against the actual approved source ZIP. Four weekly meal manuscripts are covered; the full recipe/water components are present; budget/sound/herb materials are partially represented across other originals; and visual diagrams advertised for the exercise product were not embedded in the supplied Word source. **This does not certify byte-for-byte reconstruction of Gumroad downloads.** See `docs/GUMROAD-COVERAGE-AUDIT.md`.
+
+The **Hydration** section imports the complete original 28-day fruit-and-herb infused water calendar, preserved as four seven-day tables with original blends and notes. The app adds weekly filtering, search, and browser-local day tracking, with a direct link to the unabridged original Word guide. As with other generated JSON, it is included in the existing offline PWA cache after a complete online visit.
