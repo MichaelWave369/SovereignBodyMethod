@@ -73,3 +73,7 @@ Favorites, pantry labels and purchased items use browser-only local storage; no 
 ## Offline Kitchen Mode (PWA)
 
 After an online visit, supported browsers can cache the site, all 90 original recipes, and 21 readable manuscripts for offline access. Original Word downloads are optional, initiated by the reader. No accounts, analytics, or cross-device syncing. See docs/OFFLINE-KITCHEN.md for browser-specific steps, limitations, and tests.
+
+## Movement and Breathing Studio
+
+A new **Movement** area presents 23 original protocols with full authored step-by-step instructions, modifications and source-attributed claims, a repeating three-day workout schedule mapped to the 30-day journey, browser-local bookmarks and practiced-day notes, and an optional start/pause/reset breathing count guide. Source comes only from the approved Word manuals and is re-imported during every build. **No independently validated medical benefits are claimed.** Original manuscripts and protocol steps are available offline after the normal first online PWA cache completes. See `docs/MOVEMENT-STUDIO.md`.
