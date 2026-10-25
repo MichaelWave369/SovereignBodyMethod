@@ -53,3 +53,36 @@ test('strict weekly OOXML parser maps authors’ original 90 meals correctly',as
  assert.ok(actual.every(r=>r.servings==='2 people'));
  assert.ok(actual.every(r=>r.ingredients.length>=2&&r.instructions.length>=2));
 });
+
+import {readFavorites,weeklyMenu,remainingShoppingRows} from '../src/mealUtils.js';
+
+test('favorite IDs are constrained to real day and meal IDs',()=>{
+ assert.deepEqual([...readFavorites('["day-1-smoothie","day-30-dinner","day-31-smoothie","<script>",12]')],['day-1-smoothie','day-30-dinner']);
+ assert.equal(readFavorites('{broken').size,0);
+ assert.equal(readFavorites('"not-an-array"').size,0);
+});
+test('week overview keeps original meal order and nine-day final week',()=>{
+ const source=[
+   {day:1,type:'dinner',title:'Dinner'},
+   {day:1,type:'smoothie',title:'Smoothie'},
+   {day:1,type:'salad',title:'Salad'},
+   {day:30,type:'dinner',title:'Last dinner'},
+ ];
+ const one=weeklyMenu(source,'week1');
+ assert.equal(one.length,7);
+ assert.deepEqual(one[0].recipes.map(r=>r.type),['smoothie','salad','dinner']);
+ const four=weeklyMenu(source,'week4');
+ assert.equal(four.length,9);
+ assert.equal(four.at(-1).day,30);
+ assert.equal(four.at(-1).recipes[0].title,'Last dinner');
+});
+test('pantry / purchased rows excluded from shopping without changing source',()=>{
+ const rows=shoppingRows(sample.slice(0,2));
+ const bought=new Set([rows[0].id]);
+ const have=new Set([rows[1].id]);
+ const remaining=remainingShoppingRows(rows,bought,have);
+ assert.equal(remaining.length,2);
+ assert.equal(rows.length,4);
+ assert.ok(remaining.every(row=>row.id!==rows[0].id&&row.id!==rows[1].id));
+ assert.match(shoppingListText(remaining,'day',1),/1 cup water/);
+});

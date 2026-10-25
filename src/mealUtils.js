@@ -45,3 +45,23 @@ export function shoppingListText(rows,scope,day){
   }
   return lines.join('\n');
 }
+
+/** Personal UI state never changes the canonical recipe collection. */
+export function readFavorites(raw){
+  try {
+    const values=JSON.parse(raw||'[]');
+    return new Set(Array.isArray(values)?values.filter(id=>
+      typeof id==='string' && /^day-(?:[1-9]|[12]\d|30)-(?:smoothie|salad|dinner)$/.test(id)
+    ):[]);
+  } catch {return new Set()}
+}
+export function weeklyMenu(recipes,weekId){
+  const week=WEEKS.find(w=>w.id===weekId)||WEEKS[0];
+  return Array.from({length:week.to-week.from+1},(_,i)=>{
+    const day=week.from+i;
+    return {day,recipes:dayRecipes(recipes,day)};
+  });
+}
+export function remainingShoppingRows(rows,checked,pantry){
+  return rows.filter(row=>!checked.has(row.id)&&!pantry.has(row.id));
+}
