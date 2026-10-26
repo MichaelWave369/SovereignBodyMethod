@@ -4,6 +4,7 @@ import MealPlanner from './MealPlanner.jsx';
 import MovementStudio from './MovementStudio.jsx';
 import DailyDashboard from './DailyDashboard.jsx';
 import GetStarted from './GetStarted.jsx';
+import {sharedDayFromSearch,cleanDayParameter} from './shareLinks.js';
 import SovereignShelf from './SovereignShelf.jsx';
 import {readDayPreference,SHARED_DAY_KEY,REFLECTION_KEY,MOVEMENT_KEY,HYDRATION_KEY} from './dailyUtils.js';
 import {readMovementDone} from './movementUtils.js';
@@ -19,6 +20,8 @@ function Mark({small=false}) { return <span className={'mark '+(small?'mark-smal
 function SectionHeading({eyebrow,title,children}) {return <div className="section-heading"><p className="eyebrow">{eyebrow}</p><h2>{title}</h2>{children&&<p className="section-intro">{children}</p>}</div>;}
 function App() {
   const [current,setCurrent]=useState(()=>{
+    const publicDay=sharedDayFromSearch(window.location.search);
+    if(publicDay!==null)return publicDay;
     try{return readDayPreference(window.localStorage.getItem(SHARED_DAY_KEY))}catch{return 1}
   });
   const [movementDone,setMovementDone]=useState(()=>{
@@ -36,6 +39,18 @@ function App() {
 
   useEffect(()=>{ try { window.localStorage.setItem(STORAGE,JSON.stringify([...completed].sort((a,b)=>a-b))); } catch {} },[completed]);
   useEffect(()=>{try{window.localStorage.setItem(SHARED_DAY_KEY,String(current))}catch{}},[current]);
+  useEffect(()=>{
+    // If the visitor changes a linked day, clear the now-stale query.
+    // Refreshing then honors the current locally saved day instead.
+    const cleaned=cleanDayParameter(window.location.href,current);
+    if(cleaned)window.history.replaceState(window.history.state,'',cleaned);
+  },[current]);
+  useEffect(()=>{
+    // Hash navigation on a client-rendered page can run before the section exists.
+    if(sharedDayFromSearch(window.location.search)!==null&&window.location.hash==='#daily'){
+      document.getElementById('daily')?.scrollIntoView({behavior:'auto',block:'start'});
+    }
+  },[]);
   useEffect(()=>{try{window.localStorage.setItem(MOVEMENT_KEY,JSON.stringify([...movementDone].sort((a,b)=>a-b)))}catch{}},[movementDone]);
   useEffect(()=>{try{window.localStorage.setItem(HYDRATION_KEY,JSON.stringify([...hydrationDone].sort((a,b)=>a-b)))}catch{}},[hydrationDone]);
   useEffect(()=>{ document.title=selectedSubject ? selectedSubject.name+' | The Sovereign Body Method' : 'The Sovereign Body Method | Free for Everyone'; },[selectedSubject]);
