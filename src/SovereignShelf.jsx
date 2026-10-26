@@ -57,8 +57,8 @@ export default function SovereignShelf({onDayChange}){
  const sizes={recipes:totals.recipes,movement:totals.movements,books:totals.manuscriptBooks,
   botanicals:totals.botanical,days:totals.daysTouched};
 
- function open(type,id,where,location=null){
-  window.dispatchEvent(new CustomEvent(SHELF_OPEN,{detail:{type,id,location}}));
+ function open(type,id,where,location=null,label=''){
+  window.dispatchEvent(new CustomEvent(SHELF_OPEN,{detail:{type,id,location,label}}));
   document.getElementById(where)?.scrollIntoView({behavior:'smooth',block:'start'});
  }
  function visitDay(day){
@@ -111,7 +111,7 @@ export default function SovereignShelf({onDayChange}){
   {active==='botanicals'&&(botanicalList.length?<div className="shelf-cards">{botanicalList.map(term=><article className="shelf-card" key={term.id}>
    <span className="shelf-category">ORIGINAL TEXT INDEX · {term.family.toUpperCase()}</span>
    <h3>{term.name}</h3><p>Mentioned in {term.sourceCount} original {term.sourceCount===1?'document':'documents'}. A source mention is not evidence of medical benefit or safety.</p>
-   <button type="button" onClick={()=>open('botanical',term.id,'botanicals')}>Find in original sources ↗</button>
+   <button type="button" onClick={()=>open('botanical',term.id,'botanicals',null,term.name)}>Find in original sources ↗</button>
   </article>)}</div>:empty)}
   {active==='days'&&(days.length?<div className="shelf-days">
    <p className="shelf-day-intro">These marks mean you chose to explore a day, not that you met a health target. All notes are optional and reversible.</p>
