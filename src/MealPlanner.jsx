@@ -3,6 +3,7 @@ import {TYPES,WEEKS,dayRecipes,searchRecipes,rangeRecipes,shoppingRows,shoppingL
 import WeekOverview from './WeekOverview.jsx';
 import BudgetStudio from './BudgetStudio.jsx';
 import OfflineKitchen from './OfflineKitchen.jsx';
+import {SHELF_OPEN,SHELF_UPDATED} from './shelfUtils.js';
 import './mealPlanner.css';
 
 const mealsUrl=import.meta.env.BASE_URL+'meals/recipes.json';
@@ -68,7 +69,24 @@ export default function MealPlanner({day,onDayChange}){
   },[]);
   useEffect(()=>{setWeekId(weekForDay(day).id)},[day]);
   useEffect(()=>{try{localStorage.setItem(checkedKey,JSON.stringify([...checked]))}catch{}},[checked]);
-  useEffect(()=>{try{localStorage.setItem(favoritesKey,JSON.stringify([...favorites]))}catch{}},[favorites]);
+  useEffect(()=>{
+    try{localStorage.setItem(favoritesKey,JSON.stringify([...favorites]))}catch{}
+    window.dispatchEvent(new Event(SHELF_UPDATED));
+  },[favorites]);
+  useEffect(()=>{
+    const openSaved=e=>{
+      if(e.detail?.type!=='recipe'||typeof e.detail.id!=='string')return;
+      const match=/^day-(\d{1,2})-(smoothie|salad|dinner)$/.exec(e.detail.id);
+      if(!match)return;
+      const dayNumber=Number(match[1]);
+      if(dayNumber<1||dayNumber>30)return;
+      onDayChange(dayNumber);
+      setQuery('');setFilter('all');setSeeAll(false);setTab('favorites');
+      setOpened(e.detail.id);
+    };
+    window.addEventListener(SHELF_OPEN,openSaved);
+    return()=>window.removeEventListener(SHELF_OPEN,openSaved);
+  },[onDayChange]);
   useEffect(()=>{try{localStorage.setItem(pantryKey,JSON.stringify([...pantry]))}catch{}},[pantry]);
   useEffect(()=>{
     const onPrintFinished=()=>setPrintView(null);

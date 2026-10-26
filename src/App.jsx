@@ -3,6 +3,7 @@ import ArchiveLibrary from './ArchiveLibrary.jsx';
 import MealPlanner from './MealPlanner.jsx';
 import MovementStudio from './MovementStudio.jsx';
 import DailyDashboard from './DailyDashboard.jsx';
+import SovereignShelf from './SovereignShelf.jsx';
 import {readDayPreference,SHARED_DAY_KEY,REFLECTION_KEY,MOVEMENT_KEY,HYDRATION_KEY} from './dailyUtils.js';
 import {readMovementDone} from './movementUtils.js';
 import {waterCompletion} from './hydrationUtils.js';
@@ -47,11 +48,11 @@ function App() {
     <div className="announcement"><span className="announcement-star">✳</span> THE METHOD, FREELY SHARED <span className="announcement-star">✳</span> NO PAYWALL. NO GATEKEEPING.</div>
     <header className="header">
       <a className="logo" href="#top" aria-label="Sovereign Body Method home"><Mark small/><span>THE SOVEREIGN<br/><strong>BODY METHOD</strong></span></a>
-      <nav aria-label="Main navigation"><a href="#daily">Your day</a><a href="#philosophy">Philosophy</a><a href="#journey">Journey</a><a href="#movement">Movement</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
+      <nav aria-label="Main navigation"><a href="#daily">Your day</a><a href="#my-shelf">My shelf</a><a href="#philosophy">Philosophy</a><a href="#journey">Journey</a><a href="#movement">Movement</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
       <details className="mobile-navigation">
         <summary>Explore <span aria-hidden="true">☰</span></summary>
         <nav aria-label="Mobile site navigation">
-          <a href="#daily">Your day</a><a href="#journey">30-day companion</a>
+          <a href="#daily">Your day</a><a href="#my-shelf">My saved shelf</a><a href="#journey">30-day companion</a>
           <a href="#movement">Movement & breathing</a><a href="#meals">Meals & budget</a>
           <a href="#hydration">Infused water</a><a href="#library">Original library</a>
           <a href="#sound-studio">Sound & crystals</a><a href="#botanicals">Botanicals</a>
@@ -86,6 +87,7 @@ function App() {
       <DailyDashboard day={current} onDayChange={setCurrent}
         reflectionDone={completed} movementDone={movementDone} hydrationDone={hydrationDone}
         onToggleReflection={toggleDay} onToggleMovement={toggleMovement} onToggleHydration={toggleHydration}/>
+      <SovereignShelf onDayChange={setCurrent}/>
       <section className="section journey-section" id="journey">
         <div className="journey-head"><SectionHeading eyebrow="02 / YOUR STARTING POINT" title={<>Thirty days.<br/><em>Your own pace.</em></>}>A gentle interactive companion inspired by the Method's 30-day structure. These are newly written starter reflections, not the original book's daily instructions.</SectionHeading><div className="journey-progress"><span>YOUR PROGRESS</span><strong>{done}<small> / 30</small></strong><div className="progress-track"><div style={{width:(done/30*100)+'%'}}/></div><small>Stored only in this browser. No account needed.</small></div></div>
         <div className="phase-grid">{phases.map((phase,i)=><button type="button" className={'phase-card '+(day.phase===phase.title?'active':'')} onClick={()=>navigate(i===0?1:i===1?8:i===2?15:22)} key={phase.title}><span className="phase-index">0{i+1} / {phase.tag}</span><strong>{phase.title}</strong><small>{phase.days}</small><p>{phase.note}</p><span className="phase-arrow">↗</span></button>)}</div>
