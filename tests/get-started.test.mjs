@@ -21,7 +21,7 @@ test('only explicitly starting day one changes the existing shared day',()=>{
  assert.ok(entryPaths.every(x=>!Object.hasOwn(x,'storageKey')));
 });
 test('every welcome link has a real on-page anchor',async()=>{
- const paths=['src/App.jsx','src/MealPlanner.jsx','src/MovementStudio.jsx',
+ const paths=['src/App.jsx','src/DailyDashboard.jsx','src/MealPlanner.jsx','src/MovementStudio.jsx',
   'src/HydrationStudio.jsx','src/SovereignShelf.jsx','src/ArchiveLibrary.jsx',
   'src/OriginalReleases.jsx','src/OfflineKitchen.jsx','src/PocketPanel.jsx'];
  const texts=(await Promise.all(paths.map(p=>readFile(p,'utf8')))).join('\n');
