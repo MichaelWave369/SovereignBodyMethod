@@ -127,3 +127,8 @@ The new **Start Here** section offers five simple guided routes into the authent
 ## Share the free Method (public discovery)
 
 Visitors can now copy or use native device sharing for the full public site from **Start Here**, or share a specific day from the **Daily Dashboard**. A share link such as \`?day=12#daily\` selects Day 12 when opened but never includes locally saved favorites, progress or spending data. Invalid day links fall back to the site's existing locally saved selection. The static site now also includes canonical search metadata, Open Graph/Twitter descriptions, robots.txt, sitemap.xml and truthful basic WebSite JSON-LD. GitHub Pages is a single-page app, so individual day links intentionally share the **same site-wide social preview**. See \`docs/SHARE-DISCOVER.md\`.
+
+
+## Public Launch Gate
+
+GitHub Pages deployments now run a source-and-artifact **public launch gate** automatically as \`npm postbuild\`. It verifies the 21 original DOCX downloads **byte for byte** against the approved ZIP, checks all 21 sanitized readers and source counts, cross-references the nine original Gumroad release links, validates public section anchors, confirms the offline manifest/canonical URL, and checks that manuscript downloads remain optional. Broken/incomplete builds now fail before public deployment. See \`docs/PUBLIC-LAUNCH-GATE.md\` for the audit and remaining real-browser checks.
