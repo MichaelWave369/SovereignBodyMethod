@@ -114,3 +114,7 @@ The Daily Dashboard now offers **Print today's complete plan** (or browser Save 
 ## Full-Text Source Atlas
 
 The original library now includes source-only **passage search across all 21 approved manuscripts**, including longer sections previously beyond the catalog's 100,000-character excerpt cap. Search results show original text snippets grouped by manuscript and offer **Open at this passage**, highlighting and scrolling the exact source reader. This is an offline-capable local search, not generated medical advice or a server-side log of visitors' queries. The build creates \`public/library/search-index.json\` from sanitized reader documents; the existing scoped PWA automatically caches it. See \`docs/FULL-TEXT-SOURCE-ATLAS.md\`.
+
+## Reading Desk: save your place in the originals
+
+The Source Atlas now supports **Save my place**, bookmarked original passages (up to 10 per book), a saved-books filter and **Resume saved place** in the 21-source manuscript library. It saves only a short original passage locator and approximate position on-device, not a copy of a source book. The private reading-desk state is backed up with Sovereign Pocket while preserving support for existing v1 backup files. See `docs/READING-DESK.md`.

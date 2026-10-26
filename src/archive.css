@@ -22,3 +22,24 @@
 .archive-atlas-note{font-size:12px;color:#526d56;line-height:1.7}
 .archive-manuscript [data-atlas-target="true"]{background:#f1e6bd;outline:2px solid #b39d5e;outline-offset:3px;scroll-margin-top:25px}
 @media(max-width:750px){.archive-atlas-results{padding:17px}.archive-atlas-header,.archive-atlas-group-heading{display:block}.archive-atlas-header>span{display:block;margin:13px 0}.archive-atlas-group-heading span{display:block;margin-top:7px;text-align:left}.archive-atlas-excerpts{grid-template-columns:1fr}.archive-atlas-group{padding:16px}}
+
+/* Reader Desk: local, manual source bookmarks and saved reading positions. */
+.archive-desk-filter{display:inline-flex;align-items:center;gap:9px;color:#3e6048;font-size:12px;margin:8px 0 6px}
+.archive-desk-filter input{accent-color:#366749}
+.archive-desk-resume-note{font-size:11px!important;color:#5d765d!important;margin-bottom:0}
+.archive-entry-actions .archive-resume-button{color:#775e36;border-bottom-color:#b8a87f}
+.archive-reading-desk{flex:0 0 auto;padding:13px 32px;background:#e9eee4;border-bottom:1px solid #c5d1c5;color:#35543d;max-height:32vh;overflow:auto}
+.archive-reading-desk>div:first-child{display:flex;gap:7px;flex-wrap:wrap;font-size:11px;line-height:1.5}
+.archive-reading-desk>div:first-child strong{color:#22472e}
+.archive-reading-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.archive-reading-actions button{border:1px solid #a6bda6;padding:8px 12px;font-size:11px;font-weight:700;color:#27573b;background:#fafbf5}
+.archive-reading-actions button:disabled{opacity:.5;cursor:not-allowed}
+.archive-reading-actions button:hover:not(:disabled){background:#dbe9da}
+.archive-saved-passages{padding:12px 0 0;border-top:1px solid #bdcabd;margin-top:12px}
+.archive-saved-passages summary{cursor:pointer;font-size:11px;font-weight:700}
+.archive-saved-passages ol{list-style:decimal;margin:12px 0 0;padding-left:24px}
+.archive-saved-passages li{display:flex;align-items:start;gap:12px;padding:7px 0;border-bottom:1px solid #cfdbcb;font-size:11px}
+.archive-bookmark-jump{color:#285b3b;border:0;background:transparent;flex:1;text-align:left;line-height:1.5;text-decoration:underline;text-underline-offset:3px}
+.archive-bookmark-remove{background:transparent;color:#80664a;border:0;font-size:10px;flex-shrink:0;text-decoration:underline}
+.archive-desk-notice{font-size:11px;color:#416c45;line-height:1.5;margin:10px 0 0}
+@media(max-width:720px){.archive-reading-desk{padding:13px 20px;max-height:35vh}.archive-reading-actions button{flex:1 1 140px}}
