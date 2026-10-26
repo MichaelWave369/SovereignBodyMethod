@@ -132,3 +132,8 @@ Visitors can now copy or use native device sharing for the full public site from
 ## Public Launch Gate
 
 GitHub Pages deployments now run a source-and-artifact **public launch gate** automatically as \`npm postbuild\`. It verifies the 21 original DOCX downloads **byte for byte** against the approved ZIP, checks all 21 sanitized readers and source counts, cross-references the nine original Gumroad release links, validates public section anchors, confirms the offline manifest/canonical URL, and checks that manuscript downloads remain optional. Broken/incomplete builds now fail before public deployment. See \`docs/PUBLIC-LAUNCH-GATE.md\` for the audit and remaining real-browser checks.
+
+
+## Real-browser public launch tests
+
+In addition to the strict public artifact gate, GitHub Actions now runs **six real Playwright Chromium checks against the built GitHub Pages app**: Day 12 sharing and privacy, the Day 30 infused-water boundary, favorite recipes returning from My Shelf, full-text book reading/bookmarks, mobile navigation with a valid original Word download, and true service-worker offline reload. The tests run in disposable browser profiles and use no visitor data. A failure blocks the Pages deployment and saves short-lived browser debugging traces. Run \`npm run build && npm run test:e2e\` after installing Playwright Chromium. See \`docs/BROWSER-SMOKE-TESTS.md\`.

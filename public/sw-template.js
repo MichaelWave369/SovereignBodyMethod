@@ -35,7 +35,12 @@ self.addEventListener('fetch',event=>{
     return;
   }
   event.respondWith((async()=>{
-    const cached=await caches.match(req);
+    // Vite preview and some CDNs return assets with "Vary: Origin".
+    // Cache.addAll stores those files without an Origin header, while a
+    // later module/script/style request can include it. The bytes are still
+    // the exact same-origin, scoped, versioned assets, so ignore that Vary
+    // difference when looking up *our own* previously verified cache.
+    const cached=await caches.match(req,{ignoreVary:true});
     return cached||fetch(req);
   })());
 });

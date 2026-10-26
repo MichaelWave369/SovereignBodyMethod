@@ -11,11 +11,16 @@ export default function OfflineKitchen(){
   const [progress,setProgress]=useState(null);
   const [isOnline,setIsOnline]=useState(()=>navigator.onLine);
   const [installPrompt,setInstallPrompt]=useState(null);
+  // A filled cache is not enough: the current page must also be controlled
+  // by the installed worker before an offline reload is reliable.
+  const [controlled,setControlled]=useState(()=>supported()&&Boolean(navigator.serviceWorker?.controller));
 
   const refresh=useCallback(async()=>{
     if(!supported())return;
     try{
-      setStatus(await sendOfflineCommand('STATUS'));
+      const result=await sendOfflineCommand('STATUS');
+      setStatus(result);
+      setControlled(Boolean(navigator.serviceWorker?.controller));
       setError('');
     }catch(e){setError(String(e.message||e));}
   },[]);
@@ -27,14 +32,18 @@ export default function OfflineKitchen(){
     window.addEventListener('offline',connection);
     window.addEventListener('beforeinstallprompt',install);
     window.addEventListener('appinstalled',installed);
-    navigator.serviceWorker?.addEventListener('controllerchange',refresh);
+    const controllerChanged=()=>{
+      setControlled(Boolean(navigator.serviceWorker?.controller));
+      refresh();
+    };
+    navigator.serviceWorker?.addEventListener('controllerchange',controllerChanged);
     refresh();
     return()=>{
       window.removeEventListener('online',connection);
       window.removeEventListener('offline',connection);
       window.removeEventListener('beforeinstallprompt',install);
       window.removeEventListener('appinstalled',installed);
-      navigator.serviceWorker?.removeEventListener('controllerchange',refresh);
+      navigator.serviceWorker?.removeEventListener('controllerchange',controllerChanged);
     };
   },[refresh]);
 
@@ -51,7 +60,7 @@ export default function OfflineKitchen(){
     await installPrompt.prompt();
     setInstallPrompt(null);
   }
-  const ready=status?.ready===true;
+  const ready=status?.ready===true&&controlled;
   const originalCount=status?.originalCount||0;
   const originalTotal=status?.originalTotal||0;
   return <aside id="offline-access" className="offline-kitchen" aria-labelledby="offline-kitchen-title">
@@ -71,7 +80,9 @@ export default function OfflineKitchen(){
       </div>
       <p role="status" className="offline-kitchen-note">{ready?
         'The original recipes, meal planner, shopping tools and readable manuscripts are now cached on this device. Favorites and grocery checkmarks remain in your browser.':
-        'Keep this page open while connected until all core offline files are saved. Browser settings can evict stored content.'}</p>
+        status?.ready&&!controlled?
+        'The original files are cached, but this tab is still connecting to the offline worker. Stay online until Offline reading ready appears.':
+        'Keep this page open while connected until all core offline files are saved and this tab is controlled. Browser settings can evict stored content.'}</p>
       {status&&<p className="offline-kitchen-counter">{status.coreCount} / {status.coreTotal} app and reader assets cached · {originalCount} / {originalTotal} Word originals downloaded</p>}
       {error&&<p role="alert" className="offline-kitchen-error">{error}</p>}
       {progress&&<p role="status" className="offline-kitchen-counter">Saving original Word downloads: {progress.done} / {progress.total}</p>}
