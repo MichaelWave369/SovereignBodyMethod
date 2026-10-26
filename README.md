@@ -137,3 +137,8 @@ GitHub Pages deployments now run a source-and-artifact **public launch gate** au
 ## Real-browser public launch tests
 
 In addition to the strict public artifact gate, GitHub Actions now runs **six real Playwright Chromium checks against the built GitHub Pages app**: Day 12 sharing and privacy, the Day 30 infused-water boundary, favorite recipes returning from My Shelf, full-text book reading/bookmarks, mobile navigation with a valid original Word download, and true service-worker offline reload. The tests run in disposable browser profiles and use no visitor data. A failure blocks the Pages deployment and saves short-lived browser debugging traces. Run \`npm run build && npm run test:e2e\` after installing Playwright Chromium. See \`docs/BROWSER-SMOKE-TESTS.md\`.
+
+
+## Accessible reading and keyboard regression tests
+
+The original manuscript reader now traps keyboard focus while open, closes on Escape, and returns focus to its launcher. The mobile Explore navigation supports Escape and meaningful source-section focus. Focus-visible styling extends to form controls, while reduced-motion preferences suppress nonessential scrolling/transition effects. The real-browser CI gate adds Playwright + axe-core **targeted semantic accessibility checks**, keyboard dialog/menu flows and a reduced-motion test. These improve usability but are **not** a WCAG certification. See \`docs/ACCESSIBILITY-KEYBOARD.md\`.
