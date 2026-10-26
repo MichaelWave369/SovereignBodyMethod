@@ -1,0 +1,15 @@
+.share-method{background:#f8f6ec;border:1px solid #b7c8b5;color:#213d2c;padding:23px 25px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:22px;min-width:0}
+.share-method .eyebrow{font-size:10px;color:#8b7551}
+.share-method-intro h3{font:400 clamp(24px,2.5vw,34px)/1.2 'DM Serif Display',Georgia,serif;margin:11px 0}
+.share-method-intro p:not(.eyebrow){font-size:12px;line-height:1.7;color:#596f5e;margin:0}
+.share-method-actions{min-width:0}
+.share-method-actions>label{display:block;color:#6d806e;font-size:10px;letter-spacing:.08em;font-weight:700;margin-bottom:8px}
+.share-method-actions input{width:100%;background:#fffefa;border:1px solid #bacab9;color:#31563e;padding:10px;font-size:11px;min-height:43px;overflow:hidden;text-overflow:ellipsis}
+.share-method-actions>div{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.share-method-actions button{background:#2b5038;border:1px solid #2b5038;color:#fff9e7;font-size:11px;font-weight:700;padding:12px 14px}
+.share-method-actions .share-method-native{background:transparent;color:#2b5038}
+.share-method-notice{font-size:11px;line-height:1.55;color:#3e6a45;margin:9px 0 0}
+.share-method.share-day{margin:18px 0 23px;background:#dbe7db}
+.share-method.share-site{margin:28px 0 0}
+@media(max-width:760px){.share-method{grid-template-columns:1fr;padding:18px;gap:18px}.share-method-actions button{flex:1}}
+@media print{.share-method{display:none!important}}
