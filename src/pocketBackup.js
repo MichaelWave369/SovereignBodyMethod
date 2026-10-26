@@ -4,6 +4,7 @@
  * All keys and values are allowlisted and strictly validated before any restore.
  */
 import {parsePriceInput} from './budgetUtils.js';
+import {validateReadingDesk,readingBookmarkCount,READING_DESK_KEY} from './readingDesk.js';
 
 export const POCKET_FORMAT='sovereign-body-pocket';
 export const POCKET_VERSION=1;
@@ -19,7 +20,8 @@ export const POCKET_KEYS=Object.freeze([
  'sovereign-body-method.movement.bookmarks.v1',
  'sovereign-body-method.botanicals.reading-list.v1',
  'sovereign-body-method.budget.line-prices.v1',
- 'sovereign-body-method.budget.targets.v1'
+ 'sovereign-body-method.budget.targets.v1',
+ READING_DESK_KEY
 ]);
 
 const dayRe=/^day-(?:[1-9]|[12]\d|30)-(?:smoothie|salad|dinner)$/;
@@ -67,6 +69,7 @@ export function validatePocketEntry(key,raw){
   checkArray(raw,key,n=>typeof n==='string'&&topicRe.test(n),250);
  }else if(key===POCKET_KEYS[9])checkPrices(raw,key);
  else if(key===POCKET_KEYS[10])checkPrices(raw,key,true);
+ else if(key===POCKET_KEYS[11])validateReadingDesk(parseJSON(raw,key));
  return true;
 }
 
@@ -119,6 +122,10 @@ export function pocketSummary(backup){
   shopping:arr(POCKET_KEYS[5]),
   pantry:arr(POCKET_KEYS[6]),
   reading:arr(POCKET_KEYS[7])+arr(POCKET_KEYS[8]),
+  manuscriptBookmarks:(()=>{
+    try{return readingBookmarkCount(JSON.parse(entries[POCKET_KEYS[11]]||'{}'))}
+    catch{return 0}
+  })(),
   hasBudgets:Object.hasOwn(entries,POCKET_KEYS[9])||Object.hasOwn(entries,POCKET_KEYS[10])
  };
 }

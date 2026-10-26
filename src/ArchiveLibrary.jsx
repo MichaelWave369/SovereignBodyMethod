@@ -1,5 +1,7 @@
 import { useEffect,useMemo,useRef,useState } from 'react';
 import {searchManuscriptPassages,queryTerms} from './archiveSearch.js';
+import {READING_DESK_KEY,readReadingDesk,readingBookmarkCount,saveReadingLocation,
+ toggleReadingBookmark,deleteReadingBookmark} from './readingDesk.js';
 import {archiveDocuments,archiveCategories} from './archiveCatalog.js';
 import './archive.css';
 
@@ -24,7 +26,16 @@ export default function ArchiveLibrary(){
   const [jump,setJump]=useState(null);
   const manuscriptRef=useRef(null);
   const closeRef=useRef(null);
+  const readerScrollRef=useRef(null);
+  const [desk,setDesk]=useState(()=>{
+    try{return readReadingDesk(localStorage.getItem(READING_DESK_KEY))}catch{return {}}
+  });
+  const [deskOnly,setDeskOnly]=useState(false);
+  const [deskNotice,setDeskNotice]=useState('');
+  const deskBookmarks=readingBookmarkCount(desk);
+  const booksWithPlaces=Object.values(desk).filter(record=>record.last||record.bookmarks.length).length;
   const available=items.filter(d=>d.available).length;
+  useEffect(()=>{try{localStorage.setItem(READING_DESK_KEY,JSON.stringify(desk))}catch{}},[desk]);
   useEffect(()=>{
     let active=true;
     fetch(root+'catalog.json').then(r=>{if(!r.ok)throw new Error('Catalog unavailable');return r.json()})
@@ -54,17 +65,24 @@ export default function ArchiveLibrary(){
     const words=queryTerms(jump.query);
     const blocks=Array.from(manuscriptRef.current.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th'));
     const norm=node=>(node.textContent||'').replace(/\s+/g,' ').trim().toLocaleLowerCase().normalize('NFKC');
-    const selected=blocks.find(node=>norm(node).includes(source))||
-      blocks.find(node=>words.every(w=>norm(node).includes(w)));
+    for(const node of blocks)node.removeAttribute('data-atlas-target');
+    const indexCandidate=Number.isInteger(jump.position)?blocks[jump.position]:null;
+    const selected=(indexCandidate&&norm(indexCandidate).includes(source.slice(0,45))?indexCandidate:null)||
+      blocks.find(node=>norm(node).includes(source))||
+      (words.length>0?blocks.find(node=>words.every(w=>norm(node).includes(w))):null);
     if(selected){
       selected.setAttribute('data-atlas-target','true');
       selected.scrollIntoView({behavior:'auto',block:'center'});
+    }else if(typeof jump.ratio==='number'&&readerScrollRef.current){
+      const el=readerScrollRef.current;
+      el.scrollTop=jump.ratio*Math.max(0,el.scrollHeight-el.clientHeight);
     }
   },[reader,body,jump]);
   useEffect(()=>{
     if (!reader) return;
     let active=true;
-    setBody(null);setLoading(true);
+    setBody(null);setLoading(true);setDeskNotice('');
+    if(readerScrollRef.current)readerScrollRef.current.scrollTop=0;
     fetch(root+'docs/'+encodeURIComponent(reader.id)+'.json')
       .then(r=>{if(!r.ok)throw Error('Original document could not be loaded');return r.json()})
       .then(data=>{if(active){setBody(data);setLoading(false)}})
@@ -84,8 +102,56 @@ export default function ArchiveLibrary(){
     setJump({id:document.id,probe:result.probe,query});
     setReader(document);
   }
+  function openSavedBook(doc){
+    const location=desk[doc.id]?.last;
+    setJump(location?{...location,id:doc.id,query:''}:null);
+    setReader(doc);
+  }
+  function currentReadingSpot(){
+    const root=manuscriptRef.current;
+    const viewport=readerScrollRef.current;
+    if(!root||!viewport)throw Error('Open an original book before saving a place.');
+    const blocks=Array.from(root.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th'));
+    if(!blocks.length)throw Error('The manuscript does not have readable passages.');
+    const top=viewport.getBoundingClientRect().top+28;
+    const visibleIndex=blocks.findIndex(node=>node.getBoundingClientRect().bottom>top);
+    const position=visibleIndex>=0?visibleIndex:blocks.length-1;
+    const chosen=blocks[position];
+    const probe=(chosen.textContent||'').replace(/\s+/g,' ').trim().slice(0,135);
+    if(probe.length<2)throw Error('Select a longer passage in the book.');
+    const max=Math.max(1,viewport.scrollHeight-viewport.clientHeight);
+    const ratio=Math.min(1,Math.max(0,viewport.scrollTop/max));
+    return {position,probe,ratio};
+  }
+  function savePlace(){
+    if(!reader)return;
+    try{
+      const location=currentReadingSpot();
+      setDesk(saveReadingLocation(desk,reader.id,location));
+      setDeskNotice('Saved your current reading place in this browser.');
+    }catch(error){setDeskNotice(error.message)}
+  }
+  function bookmarkPassage(){
+    if(!reader)return;
+    try{
+      const location=currentReadingSpot();
+      setDesk(toggleReadingBookmark(desk,reader.id,location));
+      setDeskNotice('Updated bookmarked original passage. Max 10 per book.');
+    }catch(error){setDeskNotice(error.message)}
+  }
+  function jumpToBookmark(location){
+    if(!reader)return;
+    setJump({...location,id:reader.id,query:''});
+    setDeskNotice('Jumping to your saved source passage.');
+  }
+  function removeBookmark(location){
+    if(!reader)return;
+    setDesk(value=>deleteReadingBookmark(value,reader.id,location.position,location.probe));
+    setDeskNotice('Bookmark removed. Your last reading place was kept.');
+  }
   const filtered=useMemo(()=>items.filter(d=>(category==='All'||category===d.category)&&
-    (d.title+' '+d.description+' '+(d.searchText||'')).toLowerCase().includes(query.trim().toLowerCase())),[items,category,query]);
+    (!deskOnly||Boolean(desk[d.id]?.last)||Boolean(desk[d.id]?.bookmarks.length))&&
+    (d.title+' '+d.description+' '+(d.searchText||'')).toLowerCase().includes(query.trim().toLowerCase())),[items,category,query,desk,deskOnly]);
   return <section className="original-archive" aria-labelledby="archive-title">
     <div className="original-archive-heading">
       <div><p className="eyebrow">THE ORIGINAL COLLECTION / ARCHIVAL EDITION</p>
@@ -101,7 +167,8 @@ export default function ArchiveLibrary(){
         {archiveCategories.map(c=><option key={c}>{c}</option>)}
       </select>
     </div>
-    <p className="archive-status" role="status">{available ? `${available} of ${items.length} canonical originals currently readable.` : 'Originals inventoried. Online reading and download will activate when the approved source ZIP is added to the repository.'} {filtered.length} document-title/catalog matches.</p>
+    <label className="archive-desk-filter"><input type="checkbox" checked={deskOnly} onChange={e=>setDeskOnly(e.target.checked)}/> Books with saved reading places or passages ({booksWithPlaces})</label>
+    <p className="archive-status" role="status">{available ? `${available} of ${items.length} canonical originals currently readable.` : 'Originals inventoried. Online reading and download will activate when the approved source ZIP is added to the repository.'} {filtered.length} document-title/catalog matches. {deskBookmarks} saved original-passage bookmarks.</p>
     {query.trim().length>=3&&<section className="archive-atlas-results" aria-labelledby="archive-atlas-heading">
       <div className="archive-atlas-header">
         <div><p className="eyebrow">FULL-TEXT SOURCE ATLAS</p><h4 id="archive-atlas-heading">Find the passage, not just the book.</h4>
@@ -125,15 +192,34 @@ export default function ArchiveLibrary(){
       <div className="archive-entry-n"><span>{String(index+1).padStart(2,'0')}</span><small>{d.category}</small></div>
       <h4>{d.title}</h4><p>{d.description}</p>
       {d.caution&&<p className="archive-caution">{d.caution}</p>}
+      {desk[d.id]?.last&&<p className="archive-desk-resume-note">Saved reading place · {desk[d.id]?.bookmarks.length||0} bookmarked passages</p>}
       <div className="archive-entry-actions">{d.available
-        ? <><button onClick={()=>{setJump(null);setReader(d)}}>Read original →</button><a href={root+'originals/'+encodeURIComponent(d.id)+'.docx'} download={d.file}>Download DOCX ↓</a></>
+        ? <><button type="button" onClick={()=>{setJump(null);setReader(d)}}>Read original →</button>
+          {desk[d.id]?.last&&<button type="button" className="archive-resume-button" onClick={()=>openSavedBook(d)}>Resume saved place ↗</button>}
+          <a href={root+'originals/'+encodeURIComponent(d.id)+'.docx'} download={d.file}>Download DOCX ↓</a></>
         : <span className="archive-pending">SOURCE AWAITING IMPORT</span>}</div>
       </article>)}</div>
     {!filtered.length&&<p className="archive-no-results">No matching documents. Try another search or category.</p>}
     {reader&&<div className="archive-modal-overlay" onMouseDown={e=>{if(e.target===e.currentTarget)setReader(null)}}>
       <div className="archive-modal" role="dialog" aria-modal="true" aria-label={'Original manuscript: '+reader.title} aria-busy={loading}>
         <div className="archive-modal-header"><div><span className="eyebrow">ORIGINAL MANUSCRIPT / {reader.category.toUpperCase()}</span><h3>{reader.title}</h3><p>Source file: {reader.file}</p></div><button ref={closeRef} aria-label="Close original manuscript" onClick={()=>setReader(null)}>×</button></div>
-        <div className="archive-reader">
+        <div className="archive-reading-desk">
+          <div><strong>Reading Desk</strong><span> Save your place or mark a passage in the original. Private to this browser.</span></div>
+          <div className="archive-reading-actions">
+            <button type="button" disabled={!body?.html} onClick={savePlace}>Save my place</button>
+            <button type="button" disabled={!body?.html} onClick={bookmarkPassage}>☆ Bookmark visible passage</button>
+            {desk[reader.id]?.last&&<button type="button" disabled={!body?.html} onClick={()=>jumpToBookmark(desk[reader.id].last)}>Resume last place ↗</button>}
+          </div>
+          {desk[reader.id]?.bookmarks.length>0&&<details className="archive-saved-passages">
+            <summary>Your saved passages ({desk[reader.id].bookmarks.length})</summary>
+            <ol>{desk[reader.id].bookmarks.map(bookmark=><li key={bookmark.position+bookmark.probe}>
+              <button type="button" className="archive-bookmark-jump" onClick={()=>jumpToBookmark(bookmark)}>{bookmark.probe.slice(0,92)}{bookmark.probe.length>92?'…':''} ↗</button>
+              <button type="button" className="archive-bookmark-remove" aria-label={'Remove saved passage: '+bookmark.probe.slice(0,45)} onClick={()=>removeBookmark(bookmark)}>Remove</button>
+            </li>)}</ol>
+          </details>}
+          {deskNotice&&<p className="archive-desk-notice" role="status">{deskNotice}</p>}
+        </div>
+        <div ref={readerScrollRef} className="archive-reader">
           <div className="archive-reader-notice"><strong>Read with context.</strong> Preserved archival material may include traditional health claims, specific herbs, dosages, spiritual interpretations or experimental routines. It is not medical advice. Speak with a qualified clinician about health decisions, medications and supplements. {reader.caution||''}</div>
           {loading&&<p>Loading original manuscript…</p>}
           {body?.error&&<p role="alert">{body.error}</p>}

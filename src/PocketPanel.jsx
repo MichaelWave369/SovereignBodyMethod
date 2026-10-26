@@ -10,7 +10,8 @@ function BackupStats({summary}){
   <span><strong>{summary.water}</strong> water notes</span>
   <span><strong>{summary.favorites}</strong> favorite recipes</span>
   <span><strong>{summary.shopping+summary.pantry}</strong> grocery checks</span>
-  <span><strong>{summary.reading}</strong> reading bookmarks</span>
+  <span><strong>{summary.reading}</strong> other reading topics</span>
+  <span><strong>{summary.manuscriptBookmarks}</strong> saved manuscript passages</span>
   {summary.hasBudgets&&<span>Personal budget values included</span>}
  </div>;
 }

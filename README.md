@@ -108,7 +108,7 @@ See \`docs/DAILY-DASHBOARD.md\` for source, offline and QA details.
 
 ## Sovereign Pocket: print + private on-device backups
 
-The Daily Dashboard now offers **Print today's complete plan** (or browser Save as PDF) using original source recipe steps, movement sequence and water blend, plus clearly distinguished introductory reflection. A **Download private backup** button exports only the 11 allowlisted local Sovereign Body preferences. Restoring requires validation, preview, explicit replacement confirmation and a reload. No unrelated browser storage, accounts, credentials or manuscript source data is exported; personal budget prices are part of the backup, which should be kept private because it is unencrypted. See \`docs/SOVEREIGN-POCKET.md\`.
+The Daily Dashboard now offers **Print today's complete plan** (or browser Save as PDF) using original source recipe steps, movement sequence and water blend, plus clearly distinguished introductory reflection. A **Download private backup** button exports only the 12 allowlisted local Sovereign Body preferences. Restoring requires validation, preview, explicit replacement confirmation and a reload. No unrelated browser storage, accounts, credentials or manuscript source data is exported; personal budget prices are part of the backup, which should be kept private because it is unencrypted. See \`docs/SOVEREIGN-POCKET.md\`.
 
 
 ## Full-Text Source Atlas
