@@ -114,7 +114,8 @@ export default function ArchiveLibrary(){
     const blocks=Array.from(root.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,blockquote,td,th'));
     if(!blocks.length)throw Error('The manuscript does not have readable passages.');
     const top=viewport.getBoundingClientRect().top+28;
-    const position=Math.max(0,blocks.findIndex(node=>node.getBoundingClientRect().bottom>top));
+    const visibleIndex=blocks.findIndex(node=>node.getBoundingClientRect().bottom>top);
+    const position=visibleIndex>=0?visibleIndex:blocks.length-1;
     const chosen=blocks[position];
     const probe=(chosen.textContent||'').replace(/\s+/g,' ').trim().slice(0,135);
     if(probe.length<2)throw Error('Select a longer passage in the book.');
@@ -126,7 +127,7 @@ export default function ArchiveLibrary(){
     if(!reader)return;
     try{
       const location=currentReadingSpot();
-      setDesk(value=>saveReadingLocation(value,reader.id,location));
+      setDesk(saveReadingLocation(desk,reader.id,location));
       setDeskNotice('Saved your current reading place in this browser.');
     }catch(error){setDeskNotice(error.message)}
   }
@@ -134,7 +135,7 @@ export default function ArchiveLibrary(){
     if(!reader)return;
     try{
       const location=currentReadingSpot();
-      setDesk(value=>toggleReadingBookmark(value,reader.id,location));
+      setDesk(toggleReadingBookmark(desk,reader.id,location));
       setDeskNotice('Updated bookmarked original passage. Max 10 per book.');
     }catch(error){setDeskNotice(error.message)}
   }

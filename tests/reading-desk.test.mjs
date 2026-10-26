@@ -28,7 +28,7 @@ test('read-only archive IDs and strict source passage constraints prevent unsafe
  assert.throws(()=>validateReadingDesk({'private-health-tracker':{last:where(12),bookmarks:[]}}));
  assert.throws(()=>validateReadingLocation({position:-2,probe:'valid',ratio:0}));
  assert.throws(()=>validateReadingLocation({position:0,probe:'valid',ratio:3}));
- assert.throws(()=>validateReadingLocation({position:0,probe:'<script>\\n',ratio:.5}));
+ assert.throws(()=>validateReadingLocation({position:0,probe:'<script>\n',ratio:.5}));
  assert.throws(()=>validateReadingLocation({position:0,probe:'a',ratio:.5}));
  assert.throws(()=>validateReadingLocation({position:0,probe:'valid',ratio:.5,html:'danger'}));
  assert.deepEqual(readReadingDesk('not json'),{});
