@@ -14,7 +14,7 @@ A print-only stylesheet deliberately overrides the existing Meals print view **o
 
 ## Private JSON backup
 
-**Data that may be included:** Eleven allowlisted, versioned Sovereign Body localStorage fields:
+**Data that may be included:** Twelve allowlisted, versioned Sovereign Body localStorage fields:
 1. Shared selected day
 2. Optional reflection progress
 3. Optional movement progress
@@ -26,6 +26,7 @@ A print-only stylesheet deliberately overrides the existing Meals print view **o
 9. Botanical reading topics
 10. Personal grocery prices
 11. Grocery budget targets
+12. Reading positions and up to ten bookmarked original passages per manuscript
 
 Only the user's existing site-local values are included. No document ZIPs, browser passwords, tokens, cookies, unrelated applications, telemetry or medical diagnoses are exported. Personal budget values *can* be sensitive, so the downloaded JSON should be kept private and **is not encrypted**.
 

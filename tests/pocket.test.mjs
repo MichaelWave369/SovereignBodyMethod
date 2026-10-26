@@ -79,3 +79,34 @@ test('write failure attempts to roll back previous saved state',()=>{
  assert.equal(old.getItem(POCKET_KEYS[0]),'2');
  assert.equal(old.getItem(POCKET_KEYS[1]),null);
 });
+
+test('Pocket v1 includes original manuscript reading spots and stays backward compatible',()=>{
+ const sampleDesk={'core-manual':{last:{position:25,probe:'Original text passage near reader position',ratio:.31},
+  bookmarks:[{position:25,probe:'Original text passage near reader position',ratio:.31}]}};
+ const saved=mockStorage({[POCKET_KEYS[0]]:'12',[POCKET_KEYS[11]]:JSON.stringify(sampleDesk)});
+ const backup=makePocketBackup(saved);
+ assert.equal(POCKET_KEYS.length,12);
+ assert.equal(pocketSummary(backup).manuscriptBookmarks,1);
+ const restored=mockStorage({});
+ restorePocketBackup(restored,JSON.stringify(backup));
+ assert.deepEqual(JSON.parse(restored.getItem(POCKET_KEYS[11])),sampleDesk);
+ const legacy=JSON.stringify({format:backup.format,version:backup.version,exportedAt:backup.exportedAt,
+  entries:{[POCKET_KEYS[0]]:'4'}});
+ const newBrowser=mockStorage({[POCKET_KEYS[11]]:JSON.stringify(sampleDesk)});
+ restorePocketBackup(newBrowser,legacy);
+ assert.equal(newBrowser.getItem(POCKET_KEYS[0]),'4');
+ assert.equal(newBrowser.getItem(POCKET_KEYS[11]),null);
+});
+test('Pocket rejects unknown reading desk manuscripts and invalid locators',()=>{
+ const original=mockStorage({[POCKET_KEYS[0]]:'2'});
+ const valid=makePocketBackup(original);
+ for(const data of [
+   {'private-family-tracker':{last:{position:3,probe:'Secret phrase',ratio:.5},bookmarks:[]}},
+   {'core-manual':{last:{position:-1,probe:'Wrong locator',ratio:.5},bookmarks:[]}},
+   {'core-manual':{last:{position:3,probe:'Valid text',ratio:7},bookmarks:[]}}
+ ]){
+   const backup={...valid,entries:{...valid.entries,[POCKET_KEYS[11]]:JSON.stringify(data)}};
+   assert.throws(()=>parsePocketBackup(JSON.stringify(backup)));
+ }
+ assert.equal(original.getItem(POCKET_KEYS[0]),'2');
+});
