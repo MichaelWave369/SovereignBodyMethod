@@ -31,3 +31,13 @@ test('generated worker has scoped paths and messaging',()=>{
   assert.match(out,/library\/originals\/core-manual.docx/);
   assert.doesNotMatch(out,/__BASE__/);
 });
+
+
+test('offline worker matches same-origin versioned asset URLs despite Vary: Origin response headers',async()=>{
+ const {readFile}=await import('node:fs/promises');
+ const template=await readFile('public/sw-template.js','utf8');
+ assert.match(template,/url\.origin!==self\.location\.origin/,'Only the worker origin is handled');
+ assert.match(template,/url\.pathname\.startsWith\(BASE\)/,'Only our GitHub Pages subpath is handled');
+ assert.match(template,/caches\.match\(req,\{ignoreVary:true\}\)/,
+   'Vary: Origin must not strand verified cached JS and CSS during offline reload');
+});
