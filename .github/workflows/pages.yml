@@ -18,6 +18,20 @@ jobs:
       - run: npm install --no-audit --no-fund
       - run: npm test
       - run: npm run build
+      - name: Install Chromium for real-browser smoke tests
+        run: npx playwright install --with-deps chromium
+      - name: Smoke-test the compiled site in Chromium
+        run: npm run test:e2e
+      - name: Save browser failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sovereign-body-browser-failures
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 7
   deploy:
     if: github.event_name != 'pull_request'
     needs: verify
