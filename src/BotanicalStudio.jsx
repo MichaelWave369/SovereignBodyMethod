@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useState} from 'react';
 import {searchableTerms,readSavedReadingList} from './botanicalUtils.js';
 import './botanicalStudio.css';
+import {SHELF_OPEN,SHELF_UPDATED} from './shelfUtils.js';
 
 const indexUrl=import.meta.env.BASE_URL+'botanicals/index.json';
 const docRoot=import.meta.env.BASE_URL+'library/originals/';
@@ -29,7 +30,18 @@ export default function BotanicalStudio(){
    .then(data=>{if(active)setArchive(data)}).catch(e=>{if(active)setLoadError(e.message)});
   return()=>{active=false};
  },[]);
- useEffect(()=>{try{localStorage.setItem(saveKey,JSON.stringify([...saved]))}catch{}},[saved]);
+ useEffect(()=>{
+   try{localStorage.setItem(saveKey,JSON.stringify([...saved]))}catch{}
+   window.dispatchEvent(new Event(SHELF_UPDATED));
+ },[saved]);
+ useEffect(()=>{
+   const openSaved=e=>{
+     if(e.detail?.type!=='botanical'||typeof e.detail.label!=='string')return;
+     setFamily('all');setSource('all');setSavedOnly(false);setQuery(e.detail.label);
+   };
+   window.addEventListener(SHELF_OPEN,openSaved);
+   return()=>window.removeEventListener(SHELF_OPEN,openSaved);
+ },[]);
  const shown=useMemo(()=>searchableTerms(archive.terms||[],{query,family,source,savedOnly,saved}),
   [archive.terms,query,family,source,savedOnly,saved]);
  function toggleSaved(id){

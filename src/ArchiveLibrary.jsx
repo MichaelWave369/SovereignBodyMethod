@@ -3,6 +3,7 @@ import {searchManuscriptPassages,queryTerms} from './archiveSearch.js';
 import {READING_DESK_KEY,readReadingDesk,readingBookmarkCount,saveReadingLocation,
  toggleReadingBookmark,deleteReadingBookmark} from './readingDesk.js';
 import {archiveDocuments,archiveCategories} from './archiveCatalog.js';
+import {SHELF_OPEN,SHELF_UPDATED} from './shelfUtils.js';
 import './archive.css';
 
 const defaultItems = archiveDocuments.map(d=>({...d,available:false}));
@@ -35,7 +36,22 @@ export default function ArchiveLibrary(){
   const deskBookmarks=readingBookmarkCount(desk);
   const booksWithPlaces=Object.values(desk).filter(record=>record.last||record.bookmarks.length).length;
   const available=items.filter(d=>d.available).length;
-  useEffect(()=>{try{localStorage.setItem(READING_DESK_KEY,JSON.stringify(desk))}catch{}},[desk]);
+  useEffect(()=>{
+    try{localStorage.setItem(READING_DESK_KEY,JSON.stringify(desk))}catch{}
+    window.dispatchEvent(new Event(SHELF_UPDATED));
+  },[desk]);
+  useEffect(()=>{
+    const openSaved=e=>{
+      if(e.detail?.type!=='manuscript'||typeof e.detail.id!=='string')return;
+      const doc=archiveDocuments.find(item=>item.id===e.detail.id);
+      if(!doc)return;
+      const location=e.detail.location;
+      setJump(location?{...location,id:doc.id,query:''}:null);
+      setReader({...doc,available:true});
+    };
+    window.addEventListener(SHELF_OPEN,openSaved);
+    return()=>window.removeEventListener(SHELF_OPEN,openSaved);
+  },[]);
   useEffect(()=>{
     let active=true;
     fetch(root+'catalog.json').then(r=>{if(!r.ok)throw new Error('Catalog unavailable');return r.json()})

@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useState} from 'react';
 import {PRACTICE_TYPES,BREATH_PATTERNS,practiceForDay,visiblePractices,readPracticeBookmarks} from './movementUtils.js';
 import './movementStudio.css';
+import {SHELF_OPEN,SHELF_UPDATED} from './shelfUtils.js';
 
 const sourceUrl=import.meta.env.BASE_URL+'movement/studio.json';
 const bookmarksKey='sovereign-body-method.movement.bookmarks.v1';
@@ -91,7 +92,19 @@ export default function MovementStudio({day,onDayChange,completed,onToggleDone})
       .then(json=>{if(active)setData(json)}).catch(e=>{if(active)setLoadError(e.message)});
     return()=>{active=false};
   },[]);
-  useEffect(()=>{try{localStorage.setItem(bookmarksKey,JSON.stringify([...bookmarks]))}catch{}},[bookmarks]);
+  useEffect(()=>{
+    try{localStorage.setItem(bookmarksKey,JSON.stringify([...bookmarks]))}catch{}
+    window.dispatchEvent(new Event(SHELF_UPDATED));
+  },[bookmarks]);
+  useEffect(()=>{
+    const openSaved=e=>{
+      if(e.detail?.type!=='movement'||typeof e.detail.id!=='string')return;
+      setTab('guide');setGroup('All');setQuery('');setSavedOnly(false);
+      setOpened(e.detail.id);
+    };
+    window.addEventListener(SHELF_OPEN,openSaved);
+    return()=>window.removeEventListener(SHELF_OPEN,openSaved);
+  },[]);
   const today=practiceForDay(day,data.schedule);
   const practices=useMemo(()=>visiblePractices(data.protocols,group,query).filter(p=>!savedOnly||bookmarks.has(p.id)),[data.protocols,group,query,savedOnly,bookmarks]);
 

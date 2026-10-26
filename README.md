@@ -114,3 +114,7 @@ The Daily Dashboard now offers **Print today's complete plan** (or browser Save 
 ## Full-Text Source Atlas
 
 The original library now includes source-only **passage search across all 21 approved manuscripts**, including longer sections previously beyond the catalog's 100,000-character excerpt cap. Search results show original text snippets grouped by manuscript and offer **Open at this passage**, highlighting and scrolling the exact source reader. This is an offline-capable local search, not generated medical advice or a server-side log of visitors' queries. The build creates \`public/library/search-index.json\` from sanitized reader documents; the existing scoped PWA automatically caches it. See \`docs/FULL-TEXT-SOURCE-ATLAS.md\`.
+
+## My Sovereign Shelf
+
+The new **My Shelf** section gathers the site's already-saved recipes, movements, manuscript reading places, botanical topics and optional days into one private collection. Saved cards open their corresponding original instructions or document, with no duplicate favorites storage or account. The shelf refreshes when other tools save new items and uses the same PWA-cached source catalogs. Sovereign Pocket already backs up the underlying data. See `docs/MY-SOVEREIGN-SHELF.md`.
