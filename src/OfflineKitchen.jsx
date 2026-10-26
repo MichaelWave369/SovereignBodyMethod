@@ -54,7 +54,7 @@ export default function OfflineKitchen(){
   const ready=status?.ready===true;
   const originalCount=status?.originalCount||0;
   const originalTotal=status?.originalTotal||0;
-  return <aside className="offline-kitchen" aria-labelledby="offline-kitchen-title">
+  return <aside id="offline-access" className="offline-kitchen" aria-labelledby="offline-kitchen-title">
     <div className="offline-kitchen-heading">
       <span className="offline-symbol" aria-hidden="true">✳</span>
       <div>

@@ -3,6 +3,7 @@ import ArchiveLibrary from './ArchiveLibrary.jsx';
 import MealPlanner from './MealPlanner.jsx';
 import MovementStudio from './MovementStudio.jsx';
 import DailyDashboard from './DailyDashboard.jsx';
+import GetStarted from './GetStarted.jsx';
 import SovereignShelf from './SovereignShelf.jsx';
 import {readDayPreference,SHARED_DAY_KEY,REFLECTION_KEY,MOVEMENT_KEY,HYDRATION_KEY} from './dailyUtils.js';
 import {readMovementDone} from './movementUtils.js';
@@ -48,18 +49,18 @@ function App() {
     <div className="announcement"><span className="announcement-star">✳</span> THE METHOD, FREELY SHARED <span className="announcement-star">✳</span> NO PAYWALL. NO GATEKEEPING.</div>
     <header className="header">
       <a className="logo" href="#top" aria-label="Sovereign Body Method home"><Mark small/><span>THE SOVEREIGN<br/><strong>BODY METHOD</strong></span></a>
-      <nav aria-label="Main navigation"><a href="#daily">Your day</a><a href="#my-shelf">My shelf</a><a href="#philosophy">Philosophy</a><a href="#journey">Journey</a><a href="#movement">Movement</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
+      <nav aria-label="Main navigation"><a href="#start-here">Start here</a><a href="#daily">Your day</a><a href="#my-shelf">My shelf</a><a href="#journey">Journey</a><a href="#movement">Movement</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
       <details className="mobile-navigation">
         <summary>Explore <span aria-hidden="true">☰</span></summary>
         <nav aria-label="Mobile site navigation">
-          <a href="#daily">Your day</a><a href="#my-shelf">My saved shelf</a><a href="#journey">30-day companion</a>
+          <a href="#start-here">Start here</a><a href="#daily">Your day</a><a href="#my-shelf">My saved shelf</a><a href="#journey">30-day companion</a>
           <a href="#movement">Movement & breathing</a><a href="#meals">Meals & budget</a>
           <a href="#hydration">Infused water</a><a href="#library">Original library</a>
           <a href="#sound-studio">Sound & crystals</a><a href="#botanicals">Botanicals</a>
           <a href="#original-releases">Original releases</a><a href="#origin">Our story</a>
         </nav>
       </details>
-      <a className="header-cta" href="#journey">Begin here <span aria-hidden="true">↗</span></a>
+      <a className="header-cta" href="#start-here">Begin here <span aria-hidden="true">↗</span></a>
     </header>
     <main id="main">
       <section className="hero" id="top">
@@ -68,7 +69,7 @@ function App() {
           <p className="hero-overline">A way back to yourself</p>
           <h1>Your body.<br/>Your rhythm.<br/><em>Your sovereignty.</em></h1>
           <p className="hero-lead">A grounded and expansive approach to well-being. Nourishment, movement, rest, nature, reflection, and the freedom to build a practice that belongs to you.</p>
-          <div className="hero-actions"><a className="button button-light" href="#daily">Open your daily dashboard <span aria-hidden="true">→</span></a><a className="text-link" href="#meals">Explore the original meals <span aria-hidden="true">↘</span></a></div>
+          <div className="hero-actions"><a className="button button-light" href="#start-here">Find your starting path <span aria-hidden="true">→</span></a><a className="text-link" href="#meals">Explore the original meals <span aria-hidden="true">↘</span></a></div>
           <div className="byline"><span className="line"/> Created with care by <strong>Mikey &amp; Larrina</strong></div>
         </div>
         <div className="hero-art" aria-label="Abstract concentric circles and organic landscape motif" role="img">
@@ -78,6 +79,7 @@ function App() {
         </div>
       </section>
       <div className="marquee" aria-hidden="true"><span>YOUR BODY IS YOURS</span><b>✳</b><span>BEGIN WHERE YOU ARE</span><b>✳</b><span>GROW AT YOUR PACE</span><b>✳</b><span>YOUR BODY IS YOURS</span></div>
+      <GetStarted onDayChange={setCurrent}/>
       <section className="section philosophy" id="philosophy">
         <div className="philosophy-side"><p className="eyebrow">01 / THE PHILOSOPHY</p><div className="side-glyph">✳</div></div>
         <div className="philosophy-content"><h2>Well-being isn't something you <em>earn.</em><br/>It's something you <em>practice.</em></h2><p>The Sovereign Body Method was created to bring pieces of daily living together. Not another set of impossible rules. A framework for listening, experimenting, reflecting, and reconnecting with yourself.</p><p>The practical foundations and the optional spiritual explorations belong in the same conversation, but they are not the same type of evidence. Choose what resonates, question what doesn't, and stay in charge of your own decisions.</p>

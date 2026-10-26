@@ -118,3 +118,7 @@ The original library now includes source-only **passage search across all 21 app
 ## My Sovereign Shelf
 
 The new **My Shelf** section gathers the site's already-saved recipes, movements, manuscript reading places, botanical topics and optional days into one private collection. Saved cards open their corresponding original instructions or document, with no duplicate favorites storage or account. The shelf refreshes when other tools save new items and uses the same PWA-cached source catalogs. Sovereign Pocket already backs up the underlying data. See `docs/MY-SOVEREIGN-SHELF.md`.
+
+## Start Here: choose your own entry route
+
+The new **Start Here** section offers five simple guided routes into the authentic site tools: daily practice, recipes and budget, movement and breath, source manuscripts, and offline/privacy. The only state-changing shortcut is an explicit **Start Day 1** link; other route choices are temporary and private. All links point to existing sections and are tested. The header now stays usable on medium-width screens. See `docs/START-HERE.md`.

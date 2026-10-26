@@ -60,7 +60,7 @@ export default function PocketPanel({day,onPrint}){
    window.location.reload();
   }catch(error){setMessage('Restore failed: '+error.message);}
  }
- return <section className="pocket-panel" aria-labelledby="pocket-heading">
+ return <section id="sovereign-pocket" className="pocket-panel" aria-labelledby="pocket-heading">
   <div className="pocket-head"><div><p className="eyebrow">SOVEREIGN POCKET · YOUR DATA, YOUR DEVICE</p>
    <h3 id="pocket-heading">Take your practice with you.</h3>
    <p>Print today's source-grounded plan or keep a private copy of your progress, saved recipes, shopping checkmarks, reading bookmarks and personal grocery prices. No account and no upload.</p></div>
