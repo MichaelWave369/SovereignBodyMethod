@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useState} from 'react';
 import {dailySources,dayProgress,uniqueCompletedDays} from './dailyUtils.js';
 import PocketPanel from './PocketPanel.jsx';
+import ShareMethod from './ShareMethod.jsx';
 import './dailyDashboard.css';
 
 const BASE=import.meta.env.BASE_URL;
@@ -67,6 +68,7 @@ export default function DailyDashboard({
     type="button" key={n} aria-label={'Select shared day '+n} aria-pressed={day===n}
     className={n===day?'selected':''} onClick={()=>onDayChange(n)}>{String(n).padStart(2,'0')}</button>)}</div>
   </div>
+  <ShareMethod mode="day" day={day}/>
   {warning.length>0&&<p role="status" className="daily-warning">Some original collections are unavailable in this build: {warning.join(', ')}. Unavailable material will not be replaced by invented content.</p>}
   <div className="daily-panels">
    <article className="daily-panel daily-meals">

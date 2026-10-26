@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {entryPaths,pathById} from './getStartedPaths.js';
+import ShareMethod from './ShareMethod.jsx';
 import './getStarted.css';
 export default function GetStarted({onDayChange}){
  const [chosen,setChosen]=useState('everyday');
@@ -23,5 +24,6 @@ export default function GetStarted({onDayChange}){
     </div></li>)}</ol>
   </div>
   <p className="get-started-footnote">Original authors' texts stay distinct from this newly written website guide. It stores no personal information or medical profile. Switching routes does not erase your saved work.</p>
+  <ShareMethod mode="site"/>
  </section>;
 }

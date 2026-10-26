@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /SovereignBodyMethod/
+
+Sitemap: https://michaelwave369.github.io/SovereignBodyMethod/sitemap.xml

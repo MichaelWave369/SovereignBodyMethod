@@ -122,3 +122,8 @@ The new **My Shelf** section gathers the site's already-saved recipes, movements
 ## Start Here: choose your own entry route
 
 The new **Start Here** section offers five simple guided routes into the authentic site tools: daily practice, recipes and budget, movement and breath, source manuscripts, and offline/privacy. The only state-changing shortcut is an explicit **Start Day 1** link; other route choices are temporary and private. All links point to existing sections and are tested. The header now stays usable on medium-width screens. See `docs/START-HERE.md`.
+
+
+## Share the free Method (public discovery)
+
+Visitors can now copy or use native device sharing for the full public site from **Start Here**, or share a specific day from the **Daily Dashboard**. A share link such as \`?day=12#daily\` selects Day 12 when opened but never includes locally saved favorites, progress or spending data. Invalid day links fall back to the site's existing locally saved selection. The static site now also includes canonical search metadata, Open Graph/Twitter descriptions, robots.txt, sitemap.xml and truthful basic WebSite JSON-LD. GitHub Pages is a single-page app, so individual day links intentionally share the **same site-wide social preview**. See \`docs/SHARE-DISCOVER.md\`.
