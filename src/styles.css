@@ -30,3 +30,19 @@
   .header-cta{display:none}
 }
 #offline-access,#sovereign-pocket{scroll-margin-top:92px}
+
+
+/* Accessible focus across all controls, not just links and buttons. */
+:where(input,textarea,select,summary,[role="dialog"]):focus-visible{
+  outline:3px solid #a06b26;
+  outline-offset:3px;
+}
+.header .mobile-navigation summary:focus-visible{
+  outline:3px solid #a06b26;
+  outline-offset:4px;
+}
+/* Suppress non-essential motion for people who request it. */
+@media (prefers-reduced-motion:reduce){
+  html,:root{scroll-behavior:auto!important}
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
+}

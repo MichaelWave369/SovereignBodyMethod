@@ -27,6 +27,8 @@ export default function ArchiveLibrary(){
   const [jump,setJump]=useState(null);
   const manuscriptRef=useRef(null);
   const closeRef=useRef(null);
+  const modalRef=useRef(null);
+  const previousFocusRef=useRef(null);
   const readerScrollRef=useRef(null);
   const [desk,setDesk]=useState(()=>{
     try{return readReadingDesk(localStorage.getItem(READING_DESK_KEY))}catch{return {}}
@@ -71,9 +73,38 @@ export default function ArchiveLibrary(){
       setSearchIndex(data);setIndexStatus('ready');
     }).catch(()=>setIndexStatus('error'));
   },[query,searchIndex,indexStatus]);
+  // The manuscript is a real modal, not an ordinary expanded card.
+  // Keep focus within it while open and restore it to the invoking control.
   useEffect(()=>{
     if(!reader)return;
+    previousFocusRef.current=document.activeElement;
+    const oldOverflow=document.body.style.overflow;
+    document.body.style.overflow='hidden';
     closeRef.current?.focus();
+    const keydown=event=>{
+      if(event.key==='Escape'){
+        event.preventDefault();
+        setReader(null);
+        return;
+      }
+      if(event.key!=='Tab'||!modalRef.current)return;
+      const controls=[...modalRef.current.querySelectorAll(
+        'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'
+      )].filter(el=>el.getClientRects().length>0&&!el.closest('[inert]'));
+      if(controls.length===0){event.preventDefault();modalRef.current.focus();return}
+      const first=controls[0],last=controls[controls.length-1];
+      if(event.shiftKey&&(document.activeElement===first||!modalRef.current.contains(document.activeElement))){
+        event.preventDefault();last.focus();
+      }else if(!event.shiftKey&&(document.activeElement===last||!modalRef.current.contains(document.activeElement))){
+        event.preventDefault();first.focus();
+      }
+    };
+    document.addEventListener('keydown',keydown);
+    return()=>{
+      document.removeEventListener('keydown',keydown);
+      document.body.style.overflow=oldOverflow;
+      if(previousFocusRef.current?.isConnected)previousFocusRef.current.focus({preventScroll:true});
+    };
   },[reader]);
   useEffect(()=>{
     if(!reader||!body?.html||!jump||jump.id!==reader.id||!manuscriptRef.current)return;
@@ -104,12 +135,6 @@ export default function ArchiveLibrary(){
       .then(data=>{if(active){setBody(data);setLoading(false)}})
       .catch(e=>{if(active){setBody({error:e.message});setLoading(false)}});
     return()=>{active=false};
-  },[reader]);
-  useEffect(()=>{
-    if(!reader)return;
-    const handler=e=>{if(e.key==='Escape')setReader(null)};
-    window.addEventListener('keydown',handler);
-    return()=>window.removeEventListener('keydown',handler);
   },[reader]);
   const passageResults=useMemo(()=>searchManuscriptPassages(searchIndex,query,category),[searchIndex,query,category]);
   function openPassage(docId,result){
@@ -217,7 +242,7 @@ export default function ArchiveLibrary(){
       </article>)}</div>
     {!filtered.length&&<p className="archive-no-results">No matching documents. Try another search or category.</p>}
     {reader&&<div className="archive-modal-overlay" onMouseDown={e=>{if(e.target===e.currentTarget)setReader(null)}}>
-      <div className="archive-modal" role="dialog" aria-modal="true" aria-label={'Original manuscript: '+reader.title} aria-busy={loading}>
+      <div ref={modalRef} className="archive-modal" role="dialog" tabIndex={-1} aria-modal="true" aria-label={'Original manuscript: '+reader.title} aria-busy={loading}>
         <div className="archive-modal-header"><div><span className="eyebrow">ORIGINAL MANUSCRIPT / {reader.category.toUpperCase()}</span><h3>{reader.title}</h3><p>Source file: {reader.file}</p></div><button ref={closeRef} aria-label="Close original manuscript" onClick={()=>setReader(null)}>×</button></div>
         <div className="archive-reading-desk">
           <div><strong>Reading Desk</strong><span> Save your place or mark a passage in the original. Private to this browser.</span></div>

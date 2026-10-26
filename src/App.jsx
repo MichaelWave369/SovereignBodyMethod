@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ArchiveLibrary from './ArchiveLibrary.jsx';
 import MealPlanner from './MealPlanner.jsx';
 import MovementStudio from './MovementStudio.jsx';
@@ -34,6 +34,24 @@ function App() {
     try { return completedFromStorage(window.localStorage.getItem(STORAGE)); } catch { return new Set(); }
   });
   const [selectedSubject,setSelectedSubject]=useState(null);
+  const mobileNavigation=useRef(null);
+  function closeMobileMenuOnNavigation(event){
+    const link=event.target.closest?.('a[href^="#"]');
+    if(!link)return;
+    if(mobileNavigation.current)mobileNavigation.current.open=false;
+    const destination=document.getElementById(link.getAttribute('href').slice(1));
+    if(destination){
+      destination.setAttribute('tabindex','-1');
+      destination.focus({preventScroll:true});
+    }
+  }
+  function mobileMenuKeys(event){
+    if(event.key==='Escape'&&mobileNavigation.current?.open){
+      event.preventDefault();
+      mobileNavigation.current.open=false;
+      mobileNavigation.current.querySelector('summary')?.focus();
+    }
+  }
   const day=journey[current-1];
   const done=completed.size;
 
@@ -65,9 +83,9 @@ function App() {
     <header className="header">
       <a className="logo" href="#top" aria-label="Sovereign Body Method home"><Mark small/><span>THE SOVEREIGN<br/><strong>BODY METHOD</strong></span></a>
       <nav aria-label="Main navigation"><a href="#start-here">Start here</a><a href="#daily">Your day</a><a href="#my-shelf">My shelf</a><a href="#journey">Journey</a><a href="#movement">Movement</a><a href="#meals">Meals</a><a href="#library">Library</a><a href="#origin">Our story</a></nav>
-      <details className="mobile-navigation">
+      <details ref={mobileNavigation} className="mobile-navigation" onKeyDown={mobileMenuKeys}>
         <summary>Explore <span aria-hidden="true">☰</span></summary>
-        <nav aria-label="Mobile site navigation">
+        <nav aria-label="Mobile site navigation" onClick={closeMobileMenuOnNavigation}>
           <a href="#start-here">Start here</a><a href="#daily">Your day</a><a href="#my-shelf">My saved shelf</a><a href="#journey">30-day companion</a>
           <a href="#movement">Movement & breathing</a><a href="#meals">Meals & budget</a>
           <a href="#hydration">Infused water</a><a href="#library">Original library</a>
