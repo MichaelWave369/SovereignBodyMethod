@@ -17,3 +17,16 @@
  .header .mobile-navigation nav a:hover,.header .mobile-navigation nav a:focus-visible{background:#e4ecdd}
  .header-cta{display:none}
 }
+
+/* Keep the header usable with a fuller section menu on medium-width devices. */
+@media(max-width:1020px){
+  .header>nav{display:none}
+  .header .mobile-navigation{display:block;position:relative;margin-left:auto}
+  .header .mobile-navigation summary{display:flex;align-items:center;gap:7px;list-style:none;cursor:pointer;font-size:12px;font-weight:700;color:#214233;padding:9px 5px}
+  .header .mobile-navigation summary::-webkit-details-marker{display:none}
+  .header .mobile-navigation nav{display:flex;position:absolute;right:0;top:calc(100% + 12px);z-index:20;flex-direction:column;align-items:stretch;gap:0;width:min(290px,85vw);max-height:min(75vh,570px);overflow:auto;background:#fbf9ef;border:1px solid #aabbad;box-shadow:0 12px 35px #16372929}
+  .header .mobile-navigation nav a{display:block;padding:11px 16px;border-bottom:1px solid #e0e4d9;color:#214333;font-size:12px}
+  .header .mobile-navigation nav a:hover,.header .mobile-navigation nav a:focus-visible{background:#e4ecdd}
+  .header-cta{display:none}
+}
+#offline-access,#sovereign-pocket{scroll-margin-top:92px}
